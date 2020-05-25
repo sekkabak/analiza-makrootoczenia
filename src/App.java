@@ -38,7 +38,6 @@ public class App {
         borderLayout.addLayoutComponent(left,BorderLayout.WEST);
         borderLayout.addLayoutComponent(center,BorderLayout.CENTER);
 
-
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
