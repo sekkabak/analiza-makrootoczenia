@@ -24,7 +24,7 @@ public class AddFactors extends JPanel {
         JLabel text2 = new JLabel("Nazwa czynnika");
         text2.setFont(new Font("Consolas", Font.BOLD, 15));
         JTextField factorName = new JTextField();
-        factorName.setPreferredSize(new Dimension(100,20));
+        factorName.setPreferredSize(new Dimension(150,20));
         factorName.setFont(new Font("Consolas", Font.BOLD, 15));
         panel2.add(text2);
         panel2.add(factorName);
