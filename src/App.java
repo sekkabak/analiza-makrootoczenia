@@ -14,7 +14,7 @@ public class App {
     private void init(){
         frame = new JFrame("App");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setResizable(false);
+        frame.setResizable(false);
 
         BorderLayout borderLayout = new BorderLayout();
         top = new Top();
