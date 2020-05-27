@@ -6,7 +6,7 @@ public class AddFactors extends JPanel {
     public AddFactors() {
         this.setPreferredSize(new Dimension(Config.windowX, Config.windowY));
         this.setBackground(Config.color2);
-        this.setBorder(new EmptyBorder(10,0,10,0));
+        this.setBorder(new EmptyBorder(10, 0, 10, 0));
 
         BorderLayout bL = new BorderLayout();
         this.setLayout(bL);
@@ -14,7 +14,7 @@ public class AddFactors extends JPanel {
 
         //top
         JPanel top = new JPanel();
-        GridLayout grid = new GridLayout(2, 2,5,5);
+        GridLayout grid = new GridLayout(2, 2, 5, 5);
         top.setLayout(grid);
         top.setPreferredSize(new Dimension(Config.windowX, 150));
         top.setBackground(Config.color2);
