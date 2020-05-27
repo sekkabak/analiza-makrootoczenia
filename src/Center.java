@@ -2,13 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Center extends JPanel {
-    //FirstWindow first = new FirstWindow();
-    AddFactors addFactors = new AddFactors();
+    //WelcomeWindow first = new WelcomeWindow();
+    AddFactors aF = new AddFactors();
     public Center(){
         this.setPreferredSize(new Dimension(400, 400));
-        this.setBackground(Color.BLACK);
+        this.setBorder(Config.border);
+        this.setBackground(Config.color2);
         //this.add(first);
-        this.add(addFactors);
-
+        this.add(aF);
     }
 }

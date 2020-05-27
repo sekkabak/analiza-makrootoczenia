@@ -1,104 +1,193 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class AddFactors extends JPanel {
-    public AddFactors(){
-        this.setPreferredSize(new Dimension(380,380));
-        this.setLayout(null);
-        //NAZWA SFERY
-        JPanel panel1 = new JPanel();
-        panel1.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        panel1.setBounds(160,30,200,60);
-        JLabel text1 = new JLabel("Nazwa sfery");
-        text1.setFont(new Font("Consolas", Font.BOLD, 15));
-        JLabel sphereName = new JLabel("(nazwa sfery)");
-        sphereName.setFont(new Font("Consolas", Font.BOLD, 15));
-        panel1.add(text1);
-        panel1.add(sphereName);
-        this.add(panel1);
+    public AddFactors() {
+        this.setPreferredSize(new Dimension(Config.windowX, Config.windowY));
+        this.setBackground(Config.color2);
+        this.setBorder(new EmptyBorder(10,0,10,0));
 
-        //NAZWA CZYNNIKA
-        JPanel panel2 = new JPanel();
-        panel2.setBounds(160,110,200,60);
-        panel2.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        JLabel text2 = new JLabel("Nazwa czynnika");
-        text2.setFont(new Font("Consolas", Font.BOLD, 15));
-        JTextField factorName = new JTextField();
-        factorName.setPreferredSize(new Dimension(150,20));
-        factorName.setFont(new Font("Consolas", Font.BOLD, 15));
-        panel2.add(text2);
-        panel2.add(factorName);
-        this.add(panel2);
+        BorderLayout bL = new BorderLayout();
+        this.setLayout(bL);
+        bL.setVgap(10);
 
+        //top
+        JPanel top = new JPanel();
+        GridLayout grid = new GridLayout(2, 2,5,5);
+        top.setLayout(grid);
+        top.setPreferredSize(new Dimension(Config.windowX, 150));
+        top.setBackground(Config.color2);
+        JLabel nameSphere = new JLabel("Nazwa sfery", SwingConstants.CENTER);
+        nameSphere.setBackground(Config.color3);
+        nameSphere.setOpaque(true);
+        nameSphere.setForeground(Config.color4);
+        nameSphere.setBorder(Config.border);
+        nameSphere.setFont(Config.font);
 
-        //WZROST
-        JLabel wzrost = new JLabel(" Wzrost");
-        wzrost.setBounds(20,200,125,30);
-        wzrost.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        wzrost.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(wzrost);
+        //TODO: tutaj będzie nazwa sfery :D
+        JLabel nameSphereText = new JLabel("", SwingConstants.CENTER);
+        nameSphereText.setBackground(Config.color3);
+        nameSphereText.setOpaque(true);
+        nameSphereText.setBorder(Config.border);
+        nameSphereText.setFont(Config.font);
 
-        //STABILIZACJA
-        JLabel stabilizacja = new JLabel(" Stabilizacja");
-        stabilizacja.setBounds(20,230,125,30);
-        stabilizacja.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        stabilizacja.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(stabilizacja);
+        JLabel nameFactor = new JLabel("Nazwa czynnika", SwingConstants.CENTER);
+        nameFactor.setBackground(Config.color3);
+        nameFactor.setOpaque(true);
+        nameFactor.setForeground(Config.color4);
+        nameFactor.setBorder(Config.border);
+        nameFactor.setFont(Config.font);
 
-        //REGRES
-        JLabel regres = new JLabel(" Regres");
-        regres.setBounds(20,260,125,30);
-        regres.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        regres.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(regres);
+        //TODO: tutaj użytkownik wprowadza nazwę czynnika
+        JTextField nameFactorText = new JTextField();
+        nameFactorText.setBackground(Config.color3);
+        nameFactorText.setOpaque(true);
+        nameFactorText.setBorder(Config.border);
+        nameFactorText.setFont(Config.font);
+        nameFactorText.setHorizontalAlignment(JTextField.CENTER);
+        nameFactorText.setForeground(Config.color1);
 
-        //SILY WPLYWU
-        JTextField silaWzrost = new JTextField();
-        silaWzrost.setBounds(160,200,60,30);
-        silaWzrost.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        silaWzrost.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(silaWzrost);
+        top.add(nameSphere);
+        top.add(nameSphereText);
+        top.add(nameFactor);
+        top.add(nameFactorText);
+        //
 
 
-        JTextField silaStabilizacja = new JTextField();
-        silaStabilizacja.setBounds(160,230,60,30);
-        silaStabilizacja.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        silaStabilizacja.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(silaStabilizacja);
+        //center
+        JPanel center = new JPanel();
+        GridLayout gL = new GridLayout(3, 3, 2, 2);
+        center.setLayout(gL);
+        center.setPreferredSize(new Dimension(380, 170));
+        center.setBackground(Config.color2);
+
+        JLabel label = new JLabel("Wzrost", SwingConstants.CENTER);
+        label.setPreferredSize(new Dimension(150, 50));
+        label.setBorder(Config.border);
+        label.setOpaque(true);
+        label.setForeground(Config.color4);
+        label.setFont(Config.font);
+        label.setBackground(Config.color3);
+
+        center.add(label);
+
+        //TODO: tutaj użytkownik wprowadza siłę wpływu do wzrostu
+        JTextField text1 = new JTextField(SwingConstants.CENTER);
+        text1.setPreferredSize(new Dimension(150, 50));
+        text1.setBorder(Config.border);
+        text1.setOpaque(true);
+        text1.setFont(Config.font);
+        text1.setBackground(Config.color3);
+        text1.setForeground(Config.color1);
+        text1.setHorizontalAlignment(JTextField.CENTER);
+
+        center.add(text1);
+
+        //TODO: tutaj użytkownik wprowadza prawdopodobieństwo do wzrostu
+        JTextField text2 = new JTextField(SwingConstants.CENTER);
+        text2.setPreferredSize(new Dimension(150, 50));
+        text2.setBackground(Config.color3);
+        text2.setOpaque(true);
+        text2.setFont(Config.font);
+        text2.setBorder(Config.border);
+        text2.setForeground(Config.color1);
+        text2.setHorizontalAlignment(JTextField.CENTER);
+
+        center.add(text2);
+
+        JLabel label3 = new JLabel("Stabilizacja", SwingConstants.CENTER);
+        label3.setPreferredSize(new Dimension(150, 50));
+        label3.setBackground(Config.color3);
+        label3.setOpaque(true);
+        label3.setForeground(Config.color4);
+        label3.setFont(Config.font);
+        label3.setBorder(Config.border);
+
+        center.add(label3);
+
+        //TODO: tutaj użytkownik wprowadza siłę wpływu do stabilizacji
+        JTextField text4 = new JTextField(SwingConstants.CENTER);
+        text4.setPreferredSize(new Dimension(150, 50));
+        text4.setBackground(Config.color3);
+        text4.setOpaque(true);
+        text4.setFont(Config.font);
+        text4.setBorder(Config.border);
+        text4.setForeground(Config.color1);
+        text4.setHorizontalAlignment(JTextField.CENTER);
+
+        center.add(text4);
+
+        //TODO: tutaj użytkownik wprowadza prawdopodobieństwo do stabilizacji
+        JTextField text5 = new JTextField(SwingConstants.CENTER);
+        text5.setPreferredSize(new Dimension(150, 50));
+        text5.setBackground(Config.color3);
+        text5.setOpaque(true);
+        text5.setFont(Config.font);
+        text5.setBorder(Config.border);
+        text5.setForeground(Config.color1);
+        text5.setHorizontalAlignment(JTextField.CENTER);
+
+        center.add(text5);
+
+        JLabel label6 = new JLabel("Regres", SwingConstants.CENTER);
+        label6.setPreferredSize(new Dimension(150, 50));
+        label6.setBackground(Config.color3);
+        label6.setFont(Config.font);
+        label6.setForeground(Config.color4);
+        label6.setOpaque(true);
+        label6.setBorder(Config.border);
+
+        center.add(label6);
+
+        //TODO: tutaj użytkownik wprowadza siłę wpływu do regresu
+        JTextField text7 = new JTextField(SwingConstants.CENTER);
+        text7.setPreferredSize(new Dimension(150, 50));
+        text7.setBackground(Config.color3);
+        text7.setOpaque(true);
+        text7.setFont(Config.font);
+        text7.setForeground(Config.color1);
+        text7.setBorder(Config.border);
+        text7.setHorizontalAlignment(JTextField.CENTER);
+
+        center.add(text7);
+
+        //TODO: tutaj użytkownik wprowadza prawdopodobieństwo do regresu
+        JTextField text8 = new JTextField(SwingConstants.CENTER);
+        text8.setPreferredSize(new Dimension(150, 50));
+        text8.setBackground(Config.color3);
+        text8.setOpaque(true);
+        text8.setFont(Config.font);
+        text8.setForeground(Config.color1);
+        text8.setBorder(Config.border);
+        text8.setHorizontalAlignment(JTextField.CENTER);
+
+        center.add(text8);
 
 
-        JTextField silaRegres = new JTextField();
-        silaRegres.setBounds(160,260,60,30);
-        silaRegres.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        silaRegres.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(silaRegres);
+        //bottom
+        JPanel south = new JPanel();
+        FlowLayout fL = new FlowLayout(FlowLayout.RIGHT);
+        south.setLayout(fL);
+        south.setPreferredSize(new Dimension(Config.windowX, 35));
+        south.setBackground(Config.color2);
 
-        //PRAWDOPODOBIENSTWO
-        JTextField prawdopodobienstwoWzrost = new JTextField();
-        prawdopodobienstwoWzrost.setBounds(235,200,60,30);
-        prawdopodobienstwoWzrost.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        prawdopodobienstwoWzrost.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(prawdopodobienstwoWzrost);
+        //TODO: przycisk do dodawania czynnika
+        JButton southButton = new JButton("+");
+        southButton.setPreferredSize(new Dimension(50, 30));
+        southButton.setFont(Config.font);
+        southButton.setBackground(Config.color1);
+        southButton.setForeground(Config.color3);
+        south.add(southButton);
+        //
 
+        this.add(top);
+        this.add(center);
+        this.add(south);
 
-        JTextField prawdopodobienstwoStabilizacja = new JTextField();
-        prawdopodobienstwoStabilizacja.setBounds(235,230,60,30);
-        prawdopodobienstwoStabilizacja.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        prawdopodobienstwoStabilizacja.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(prawdopodobienstwoStabilizacja);
+        bL.addLayoutComponent(top, BorderLayout.NORTH);
+        bL.addLayoutComponent(center, BorderLayout.CENTER);
+        bL.addLayoutComponent(south, BorderLayout.SOUTH);
 
-
-        JTextField prawdopodobienstwoRegres = new JTextField();
-        prawdopodobienstwoRegres.setBounds(235,260,60,30);
-        prawdopodobienstwoRegres.setBorder(BorderFactory.createLineBorder(Color.black,3));
-        prawdopodobienstwoRegres.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(prawdopodobienstwoRegres);
-
-
-        //BUTTON ADD
-        JButton plus = new JButton(" + ");
-        plus.setBounds(280,320,80,30);
-        plus.setFont(new Font("Consolas", Font.BOLD, 15));
-        this.add(plus);
     }
 }
