@@ -5,6 +5,8 @@ import layout.Window;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -12,8 +14,11 @@ import java.util.ArrayList;
 public class ChoosingAreas extends Window {
     JPanel pToTakeFrom = new JPanel();
     JPanel pToPutInside = new JPanel();
+    JButton badd = new JButton("+");
+    JTextField jfieldForSphere= new JTextField();
     ArrayList<String> listToTakeFrom = new ArrayList<>();
     ArrayList<String> listToPut = new ArrayList<>();
+    ArrayList<String> listToBin = new ArrayList<>();
 
     public ChoosingAreas(App app) {
         super(app);
@@ -33,6 +38,22 @@ public class ChoosingAreas extends Window {
         pToPutInside.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         pToPutInside.setLayout(new GridLayout(4, 1));
         pToPutInside.setBounds(220, 100, 120, 130);
+        badd.setBounds(300, 300, 50, 30);
+        badd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!jfieldForSphere.getText().equals("")) {
+                    listToBin.add(jfieldForSphere.getText());
+                    listToPut.add(jfieldForSphere.getText());
+                }
+                jfieldForSphere.setText("");
+                redo(pToPutInside, pToTakeFrom, listToPut);
+                System.out.println(listToBin);
+            }
+        });
+        jfieldForSphere.setBounds(200, 300, 90, 30);
+        add(jfieldForSphere);
+        add(badd);
         add(pToTakeFrom);
         add(pToPutInside);
         addToJpanel(pToTakeFrom, pToPutInside);
@@ -48,13 +69,17 @@ public class ChoosingAreas extends Window {
             jLabel.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    listToTakeFrom.add(jLabel.getText());
+                    if(checkIfAdd(listToBin, jLabel.getText())){
+                        listToTakeFrom.add(jLabel.getText());
+                    }
                     listToPut.remove(jLabel.getText());
                     panel.remove(jLabel);
                     GridLayout gr = new GridLayout(list.size(), 1);
                     panel.setLayout(gr);
                     panel.validate();
                     panel.repaint();
+                    System.out.println(listToTakeFrom);
+                    System.out.println(listToPut);
                     addToJpanel(panel2, panel);
                 }
                 @Override
@@ -102,10 +127,24 @@ public class ChoosingAreas extends Window {
         panel.validate();
     }
 
+    public boolean checkIfAdd(ArrayList<String> s, String name){
+        if(s.size() != 0) {
+            for (String value : s) {
+                if (name.equals(value))
+                    return false;
+            }
+        }
+        return true;
+    }
+
 
     @Override
     public void display() {
         // TODO przenieść wszystkie ustawienia danych do tej metody
         // dane należy pobierać z app.dataManager
     }
+
+
 }
+
+
