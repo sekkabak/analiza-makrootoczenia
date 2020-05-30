@@ -1,18 +1,25 @@
+package window;
+
+import layout.App;
+import layout.Window;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class choosingSpheres extends JPanel {
-
+public class ChoosingAreas extends Window {
     JPanel pToTakeFrom = new JPanel();
     JPanel pToPutInside = new JPanel();
     ArrayList<String> listToTakeFrom = new ArrayList<>();
     ArrayList<String> listToPut = new ArrayList<>();
 
-    public choosingSpheres() {
-        setPreferredSize(new Dimension(400, 394));
+    public ChoosingAreas(App app) {
+        super(app);
+
+        // TODO trzeba to zrobić chociaż trochę responsywnie
+//        setPreferredSize(new Dimension(400, 394));
         setBorder(BorderFactory.createLineBorder(Color.black, 3));
         setBackground(Color.lightGray);
         setLayout(null);
@@ -31,7 +38,6 @@ public class choosingSpheres extends JPanel {
         addToJpanel(pToTakeFrom, pToPutInside);
         setVisible(false);
     }
-
 
     public void redo (JPanel panel, JPanel panel2,ArrayList<String> list){
         panel.setLayout(new GridLayout(list.size(), 1));
@@ -97,5 +103,9 @@ public class choosingSpheres extends JPanel {
     }
 
 
-
+    @Override
+    public void display() {
+        // TODO przenieść wszystkie ustawienia danych do tej metody
+        // dane należy pobierać z app.dataManager
+    }
 }

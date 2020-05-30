@@ -1,10 +1,23 @@
+package window;
+
+import app.Config;
+import layout.App;
+import layout.Window;
+import model.Area;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class AddFactors extends JPanel {
-    public AddFactors() {
-        this.setPreferredSize(new Dimension(Config.windowX, Config.windowY));
+public class AddFactors extends Window {
+    Area area;
+
+    public AddFactors(App app, Area area) {
+        super(app);
+        this.factorWindow = true;
+        this.area = area;
+
+//        this.setPreferredSize(new Dimension(Config.windowX, Config.windowY));
         this.setBackground(Config.color2);
         this.setBorder(new EmptyBorder(10, 0, 10, 0));
 
@@ -16,7 +29,7 @@ public class AddFactors extends JPanel {
         JPanel top = new JPanel();
         GridLayout grid = new GridLayout(2, 2, 5, 5);
         top.setLayout(grid);
-        top.setPreferredSize(new Dimension(Config.windowX, 150));
+//        top.setPreferredSize(new Dimension(Config.windowX, 150));
         top.setBackground(Config.color2);
         JLabel nameSphere = new JLabel("Nazwa sfery", SwingConstants.CENTER);
         nameSphere.setBackground(Config.color3);
@@ -169,7 +182,7 @@ public class AddFactors extends JPanel {
         JPanel south = new JPanel();
         FlowLayout fL = new FlowLayout(FlowLayout.RIGHT);
         south.setLayout(fL);
-        south.setPreferredSize(new Dimension(Config.windowX, 35));
+//        south.setPreferredSize(new Dimension(Config.windowX, 35));
         south.setBackground(Config.color2);
 
         //TODO: przycisk do dodawania czynnika
@@ -188,6 +201,11 @@ public class AddFactors extends JPanel {
         bL.addLayoutComponent(top, BorderLayout.NORTH);
         bL.addLayoutComponent(center, BorderLayout.CENTER);
         bL.addLayoutComponent(south, BorderLayout.SOUTH);
+
+    }
+
+    @Override
+    public void display() {
 
     }
 }

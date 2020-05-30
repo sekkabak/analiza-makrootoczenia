@@ -1,12 +1,20 @@
+package layout;
+
+import app.Config;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Top extends JPanel {
+    App app;
+
     JLabel title = new JLabel("ANALIZA MAKROOTOCZENIA", SwingConstants.CENTER);
     JLabel metodTitle = new JLabel("SCENARIUSZE STANÓW OTOCZENIA", SwingConstants.CENTER);
 
-    public Top() {
+    public Top(App app) {
+        this.app = app;
+
         this.setPreferredSize(new Dimension(400, 80));
         this.setBackground(Config.color3);
         this.setBorder(new EmptyBorder(10, 0, 10, 0));
