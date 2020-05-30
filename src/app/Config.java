@@ -13,6 +13,16 @@ public class Config {
     public static final int frameMarginLeftRight = 25;
 
     public static final String[] influenceValidList = {"-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5"};
+    public static final String[] factorPartsName = {"Wzrost", "Stabilizacja", "Regres"};
+
+    public static final String[] initialAreas = {
+            "Polityczna",
+            "Ekonomiczna",
+            "Społeczna",
+            "Demograficzna",
+            "Technologiczna",
+            "Regulacyjna"
+    };
 
     public static final Font font = new Font("Consolas", Font.BOLD, 15);
     public static final Color color1 = new Color(119,51,68);

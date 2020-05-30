@@ -19,6 +19,7 @@ public class Center extends JPanel{
         removeAll();
         revalidate();
         window.setVisible(true);
+        window.display();
         add(window);
         repaint();
     }

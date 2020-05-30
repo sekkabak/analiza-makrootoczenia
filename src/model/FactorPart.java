@@ -6,24 +6,22 @@ import java.util.Arrays;
 
 public class FactorPart {
     public String name;
-    private float probability;
-    private String influence;
+    private String probability = "0";
+    private String influence = "0";
 
-    public FactorPart(String name, float probability, String influence) {
+    public FactorPart(String name) {
         this.name = name;
-        setProbability(probability);
-        setInfluence(influence);
     }
 
-    public float getProbability() {
+    public String getProbability() {
         return probability;
     }
 
-    public void setProbability(float probability) {
-        // TODO throw error
-        if(probability < 0 || probability > 1) {
-            this.probability = 0;
-        }
+    public void setProbability(String probability) {
+//        // TODO throw error
+//        if(probability < 0 || probability > 1) {
+//            this.probability = 0;
+//        }
 
         this.probability = probability;
     }

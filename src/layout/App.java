@@ -3,13 +3,14 @@ package layout;
 import app.Config;
 import model.Area;
 import model.DataManager;
-import window.AddFactors;
+import window.FillFactor;
 import window.ChoosingAreas;
 import window.Welcome;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class App {
     DataManager dataManager;
@@ -81,9 +82,17 @@ public class App {
         windows.add(new Welcome(this));
         windows.add(new ChoosingAreas(this));
 
-        windows.add(new AddFactors(this, dataManager.currentArea));
+        windows.add(new FillFactor(this, dataManager.getCurrentArea()));
 
         progressMax = windows.size() - 1;
+    }
+
+    private void calculateFactorWindows() {
+//        windows.removeIf(w -> w instanceof FillFactor);
+
+//        ArrayList<Window> Factors = new ArrayList<>();
+//        for()
+
     }
 
     public void prevPage() {
@@ -100,6 +109,7 @@ public class App {
         windowIndex++;
 
         bottom.adjustProgressBar();
+        calculateFactorWindows();
 
         center.displayWindow(windows.get(windowIndex));
     }

@@ -6,7 +6,6 @@ import javax.swing.*;
 
 public abstract class Window extends JPanel {
     public App app;
-    public boolean factorWindow = false;
 
     public Window(App app) {
         this.app = app;
