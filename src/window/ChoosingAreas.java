@@ -4,12 +4,14 @@ import layout.App;
 import layout.Window;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import app.Config;
 
 public class ChoosingAreas extends Window {
     JPanel pToTakeFrom = new JPanel();
@@ -22,40 +24,41 @@ public class ChoosingAreas extends Window {
 
     public ChoosingAreas(App app) {
         super(app);
-
+        setBackground(Config.color2);
         // TODO trzeba to zrobić chociaż trochę responsywnie
-//        setPreferredSize(new Dimension(400, 394));
-        setBorder(BorderFactory.createLineBorder(Color.black, 3));
-        setBackground(Color.lightGray);
-        setLayout(null);
-        listToTakeFrom.add("Pierwszy");
-        listToTakeFrom.add("Drugi");
-        listToTakeFrom.add("Trzeci");
-        listToTakeFrom.add("Czwarty");
+        setBorder(new EmptyBorder(10, 0, 10, 0));
+        BorderLayout borderLayout = new BorderLayout();
+        setLayout(borderLayout);
         pToTakeFrom.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         pToTakeFrom.setLayout(new GridLayout(4, 1));
-        pToTakeFrom.setBounds(60, 100, 120, 130);
+        pToTakeFrom.setPreferredSize(new Dimension(120,130));
+        pToPutInside.setPreferredSize(new Dimension(120, 130));
+        pToPutInside.setBorder(new EmptyBorder(0,0,0,10));
+//        pToTakeFrom.setBounds(60, 100, 120, 130);
         pToPutInside.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         pToPutInside.setLayout(new GridLayout(4, 1));
-        pToPutInside.setBounds(220, 100, 120, 130);
-        badd.setBounds(300, 300, 50, 30);
-        badd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(!jfieldForSphere.getText().equals("")) {
-                    listToBin.add(jfieldForSphere.getText());
-                    listToPut.add(jfieldForSphere.getText());
-                }
-                jfieldForSphere.setText("");
-                redo(pToPutInside, pToTakeFrom, listToPut);
-                System.out.println(listToBin);
+//        pToPutInside.setBounds(220, 100, 120, 130);
+//        badd.setBounds(300, 300, 50, 30);
+        initList();
+        badd.addActionListener(e -> {
+            if(!jfieldForSphere.getText().equals("")) {
+                listToBin.add(jfieldForSphere.getText());
+                listToPut.add(jfieldForSphere.getText());
             }
+            jfieldForSphere.setText("");
+            redo(pToPutInside, pToTakeFrom, listToPut);
         });
-        jfieldForSphere.setBounds(200, 300, 90, 30);
+//        jfieldForSphere.setBounds(200, 300, 90, 30);
         add(jfieldForSphere);
         add(badd);
         add(pToTakeFrom);
         add(pToPutInside);
+        borderLayout.addLayoutComponent(pToTakeFrom, BorderLayout.WEST);
+        borderLayout.addLayoutComponent(pToTakeFrom, BorderLayout.EAST);
+        borderLayout.addLayoutComponent(jfieldForSphere, BorderLayout.SOUTH);
+        borderLayout.addLayoutComponent(badd, BorderLayout.SOUTH);
+
+
         addToJpanel(pToTakeFrom, pToPutInside);
         setVisible(false);
     }
@@ -65,6 +68,10 @@ public class ChoosingAreas extends Window {
         panel.removeAll();
         for (String s : list) {
             JLabel jLabel = new JLabel(s, SwingConstants.CENTER);
+            jLabel.setFont(Config.font);
+            jLabel.setBackground(Config.color3);
+            jLabel.setOpaque(true);
+            jLabel.setForeground(Config.color1);
             jLabel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
             jLabel.addMouseListener(new MouseListener() {
                 @Override
@@ -78,8 +85,6 @@ public class ChoosingAreas extends Window {
                     panel.setLayout(gr);
                     panel.validate();
                     panel.repaint();
-                    System.out.println(listToTakeFrom);
-                    System.out.println(listToPut);
                     addToJpanel(panel2, panel);
                 }
                 @Override
@@ -101,6 +106,10 @@ public class ChoosingAreas extends Window {
         for(int i = 0; i < listToTakeFrom.size(); i++) {
             JLabel jLabel = new JLabel(listToTakeFrom.get(i), SwingConstants.CENTER);
             jLabel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+            jLabel.setFont(Config.font);
+            jLabel.setBackground(Config.color3);
+            jLabel.setOpaque(true);
+            jLabel.setForeground(Config.color1);
             panel.add(jLabel);
             jLabel.addMouseListener(new MouseListener() {
                 @Override
@@ -137,6 +146,12 @@ public class ChoosingAreas extends Window {
         return true;
     }
 
+    public void initList(){
+        listToTakeFrom.add("Pierwszy");
+        listToTakeFrom.add("Drugi");
+        listToTakeFrom.add("Trzeci");
+        listToTakeFrom.add("Czwarty");
+    }
 
     @Override
     public void display() {
