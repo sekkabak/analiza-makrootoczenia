@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
+        import java.awt.*;
 
 public class FirstWindow extends JPanel {
     public FirstWindow() {
@@ -7,5 +7,10 @@ public class FirstWindow extends JPanel {
         text.setPreferredSize(new Dimension(380, 80));
         text.setBackground(Color.lightGray);
         this.add(text);
+        setVisible(true);
+    }
+
+    public void changeWindow(){
+
     }
 }

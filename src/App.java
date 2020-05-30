@@ -18,10 +18,10 @@ public class App {
 
         BorderLayout borderLayout = new BorderLayout();
         top = new Top();
-        bottom = new Bottom();
+        center = new Center();
+        bottom = new Bottom(center);
         left = new Left();
         right = new Right();
-        center = new Center();
 
         borderLayout.preferredLayoutSize(frame);
         frame.setLayout(borderLayout);
@@ -42,6 +42,9 @@ public class App {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
     }
+
+
 
 }
