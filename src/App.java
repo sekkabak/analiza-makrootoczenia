@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class App {
@@ -37,7 +38,6 @@ public class App {
         borderLayout.addLayoutComponent(right,BorderLayout.EAST);
         borderLayout.addLayoutComponent(left,BorderLayout.WEST);
         borderLayout.addLayoutComponent(center,BorderLayout.CENTER);
-
 
         frame.pack();
         frame.setLocationRelativeTo(null);
