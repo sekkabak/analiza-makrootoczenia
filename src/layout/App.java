@@ -14,6 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class App {
+    public boolean auto_scenario = true;
     public DataManager dataManager;
 
     JFrame frame;
@@ -42,7 +43,6 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(Config.initialState);
         frame.setMinimumSize(Config.initialState);
-//        frame.setResizable(false);
 
         BorderLayout borderLayout = new BorderLayout();
         top = new Top(this);
@@ -78,7 +78,6 @@ public class App {
 
         windows.add(new ChoosingAreas(this));
 
-        windows.add(new Scenario(this, "TEST"));
         windows.add(new Welcome(this));
 
         progressMax = windows.size() - 1;
@@ -99,14 +98,53 @@ public class App {
     private void calculateScenariosWindows() {
         windows.removeIf(w -> w instanceof Scenario);
 
-        int windowI = windowIndex;
+        int windowI = getLastFillFactorWindowIndex();
+        if(windowI == -1)
+            return;
+
+        // optymistyczny
         for (Area area : dataManager.areas) {
-            for (int i = 0; i < area.factors.size(); i++, windowI++) {
-                windows.add(windowI, new FillFactor(this, area, area.factors.get(i)));
-            }
+            windows.add(windowI, new Scenario(this, "optymistyczny", area, 1));
+            windowI++;
+        }
+
+        // pesymistyczny
+        for (Area area : dataManager.areas) {
+            windows.add(windowI, new Scenario(this, "pesymistyczny", area, 1));
+            windowI++;
+        }
+
+        // najbardziej prawdopodobny
+        for (Area area : dataManager.areas) {
+            windows.add(windowI, new Scenario(this, "najbardziej prawdopodobny", area, 2));
+            windowI++;
+        }
+
+        // niespodziankowy
+        for (Area area : dataManager.areas) {
+            windows.add(windowI, new Scenario(this, "niespodziankowy", area, 2));
+            windowI++;
         }
 
         progressMax = windows.size() - 1;
+    }
+
+    private int getLastFillFactorWindowIndex() {
+        int index = 0;
+        boolean begin = false;
+        for (Window w : windows) {
+            if(!begin && w instanceof FillFactor ) {
+                begin = true;
+            }
+            else if(begin && !(w instanceof FillFactor))
+            {
+                return index;
+            }
+
+            index++;
+        }
+
+        return -1;
     }
 
     public void addFactorPage() {
@@ -132,8 +170,10 @@ public class App {
         windowIndex++;
 
         // tworzy ekrany dla czynników po wybraniu sfer
-        if (windowIndex > 0 && windows.get(windowIndex - 1) instanceof ChoosingAreas)
+        if (windowIndex > 0 && windows.get(windowIndex - 1) instanceof ChoosingAreas) {
             calculateFactorWindows();
+            calculateScenariosWindows();
+        }
 
         bottom.adjustProgressBar();
         center.displayWindow(windows.get(windowIndex));

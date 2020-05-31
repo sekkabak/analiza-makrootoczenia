@@ -18,7 +18,7 @@ public class Config {
             "<div style='background-color:red'>a to jest nowa linia</div>" +
             "</html>";
 
-    public static final Dimension initialState = new Dimension(600, 600);
+    public static final Dimension initialState = new Dimension(900, 800);
 
     public static final int frameMarginLeftRight = 25;
 

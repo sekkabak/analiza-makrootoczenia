@@ -3,21 +3,30 @@ package window;
 import app.Config;
 import app.Helper;
 import layout.App;
-import layout.ScrollPane;
 import layout.Window;
+import model.Area;
+import model.Factor;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Scenario extends Window {
+    int scenarioType;
+
     JPanel top;
     JPanel center;
-    String name;
 
-    public Scenario(App app, String name) {
+    JLabel areaName;
+
+    String name;
+    Area area;
+
+    public Scenario(App app, String name, Area area, int type) {
         super(app);
+        this.area = area;
         this.name = name;
+        this.scenarioType = type;
 
         setBorder(new EmptyBorder(10, 10, 10, 10));
         BorderLayout bl = new BorderLayout();
@@ -25,103 +34,80 @@ public class Scenario extends Window {
         bl.setVgap(10);
 
         createTopPanel();
-        center = new ScrollPane();
+        center = new JPanel();
         createFactors();
 
+        JScrollPane scrollPane = new JScrollPane(center, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
         this.add(top);
-        this.add(center);
+        this.add(scrollPane);
 
         bl.addLayoutComponent(top, BorderLayout.PAGE_START);
-        bl.addLayoutComponent(center, BorderLayout.CENTER);
+        bl.addLayoutComponent(scrollPane, BorderLayout.CENTER);
     }
 
     private void createFactors() {
-        // TODO change rows dynamically
+        if(scenarioType == 1)
+            createFactors1();
+        else
+            createFactors2();
+    }
+
+    private void createFactors1() {
         center.removeAll();
         center.revalidate();
 
-        center.setLayout(new GridLayout(5, 2));
+        center.setLayout(new GridLayout(area.factors.size() + 2, 2));
         center.setBackground(Config.color1);
         center.setForeground(Config.color4);
         center.setOpaque(true);
         center.setBorder(Config.border);
         center.setFont(Config.font);
 
-//        center.add(Helper.createLabel("Czynniki"));
-//        center.add(Helper.createLabel("Siła wpływu"));
-//        center.add(Helper.createLabel("Czynnik 1"));
-//        center.add(Helper.createLabel("Czynniki"));
-//        center.add(Helper.createLabel("Czynniki"));
-//        center.add(Helper.createLabel("Czynniki"));
+        center.add(Helper.createLabel("Czynniki"));
+        center.add(Helper.createLabel("Siła wpływu"));
 
-        JLabel label1 = new JLabel("Czynnik 1", SwingConstants.CENTER);
-        label1.setBorder(Config.border);
-        label1.setFont(Config.font);
-        label1.setBackground(Config.color3);
-        label1.setForeground(Config.color4);
-        label1.setOpaque(true);
-        center.add(label1);
+        for (Factor x : area.factors) {
+            center.add(Helper.createLabel(x.getName()));
+            center.add(Helper.createField(""));
+        }
 
-        JLabel label2 = new JLabel("siła wplywu 1", SwingConstants.CENTER);
-        label2.setBorder(Config.border);
-        label2.setFont(Config.font);
-        label2.setBackground(Config.color3);
-        label2.setForeground(Config.color4);
-        label2.setOpaque(true);
-        center.add(label2);
+        center.add(Helper.createLabel("Średnia"));
+        center.add(Helper.createLabel(""));
 
-        JLabel label3 = new JLabel("Czynnik 2", SwingConstants.CENTER);
-        label3.setBorder(Config.border);
-        label3.setFont(Config.font);
-        label3.setBackground(Config.color3);
-        label3.setForeground(Config.color4);
-        label3.setOpaque(true);
-        center.add(label3);
+        center.repaint();
+    }
 
-        JLabel label4 = new JLabel("Siła wpływu 2", SwingConstants.CENTER);
-        label4.setBorder(Config.border);
-        label4.setFont(Config.font);
-        label4.setBackground(Config.color3);
-        label4.setForeground(Config.color4);
-        label4.setOpaque(true);
-        center.add(label4);
+    private void createFactors2() {
+        center.removeAll();
+        center.revalidate();
 
+        center.setLayout(new GridLayout(area.factors.size() + 2, 4));
+        center.setBackground(Config.color1);
+        center.setForeground(Config.color4);
+        center.setOpaque(true);
+        center.setBorder(Config.border);
+        center.setFont(Config.font);
 
-        // siły wpływu dla czynników
-        JLabel label5 = new JLabel("Czynnik 3", SwingConstants.CENTER);
-        label5.setBorder(Config.border);
-        label5.setFont(Config.font);
-        label5.setBackground(Config.color3);
-        label5.setForeground(Config.color4);
-        label5.setOpaque(true);
-        center.add(label5);
+        center.add(Helper.createLabel("Czynniki"));
+        center.add(Helper.createLabel("Prawdopodobieństwo"));
+        center.add(Helper.createLabel("Siła wpływu „ujemna”"));
+        center.add(Helper.createLabel("Siła wpływu „dodatnia”"));
 
-        JLabel label6 = new JLabel("Siła wpływu 3", SwingConstants.CENTER);
-        label6.setBorder(Config.border);
-        label6.setFont(Config.font);
-        label6.setBackground(Config.color3);
-        label6.setForeground(Config.color4);
-        label6.setOpaque(true);
-        center.add(label6);
+        for (Factor x : area.factors) {
+            center.add(Helper.createLabel(x.getName()));
+            center.add(Helper.createField(""));
+            center.add(Helper.createField(""));
+            center.add(Helper.createField(""));
+        }
 
-        // srednia
-        JLabel average = new JLabel("Srednia", SwingConstants.CENTER);
-        average.setBorder(Config.border);
-        average.setFont(Config.font);
-        average.setBackground(Config.color3);
-        average.setForeground(Config.color4);
-        average.setOpaque(true);
-        center.add(average);
-        //
+        // TODO
+        center.add(Helper.createLabel("Średnia"));
+        center.add(Helper.createLabel(""));
+        center.add(Helper.createLabel(""));
+        center.add(Helper.createLabel(""));
 
-        //średnia wynik
-        JLabel label0 = new JLabel("wynik", SwingConstants.CENTER);
-        label0.setBorder(Config.border);
-        label0.setFont(Config.font);
-        label0.setBackground(Config.color3);
-        label0.setForeground(Config.color4);
-        label0.setOpaque(true);
-        center.add(label0);
+        center.repaint();
     }
 
     private void createTopPanel() {
@@ -133,11 +119,15 @@ public class Scenario extends Window {
         top.add(Helper.createLabel("Scenariusz"));
         top.add(Helper.createLabel(name));
         top.add(Helper.createLabel("Nazwa sfery"));
-        top.add(Helper.createLabel("........."));
+
+        areaName = Helper.createLabel("");
+        top.add(areaName);
     }
 
     @Override
     public void display() {
-        // TODO
+        areaName.setText(area.name);
+
+        createFactors();
     }
 }

@@ -101,10 +101,12 @@ public class ChoosingAreas extends Window {
             enabledAreas.remove(PositionInEnabledTable);
         }
         app.dataManager.areas = enabledAreas;
-        this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+        this.remove(enabledAreaTable);
+        this.remove(disabledAreaTable);
         enabledAreaTable = new AreasTable(enabledAreas, this);
         disabledAreaTable = new AreasTable(disabledAreas, this);
-        this.add(disabledAreaTable); this.add(enabledAreaTable);
+        this.add(disabledAreaTable);
+        this.add(enabledAreaTable);
         this.validate();
     }
 
