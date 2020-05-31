@@ -43,10 +43,11 @@ public class ChoosingAreas extends Window {
         enabledAreas.setLayout(new GridLayout(4, 1));
 
         initList();
-        badd.addActionListener(e -> {
-            if(!jfieldForSphere.getText().equals("")) {
-                listToBin.add(jfieldForSphere.getText());
-                listToPut.add(jfieldForSphere.getText());
+
+        // naciśnięcie guzika dodającego sferę
+        addNewArea.addActionListener(e -> {
+            if (!newAreaName.getText().equals("")) {
+                Area area = new Area(newAreaName.getText());
                 areasBin.add(area);
                 enabledAreasList.add(area);
             }
