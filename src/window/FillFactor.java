@@ -1,6 +1,7 @@
 package window;
 
 import app.Config;
+import app.Helper;
 import layout.App;
 import layout.BindedTextField;
 import layout.Window;
@@ -52,45 +53,20 @@ public class FillFactor extends Window {
 
     private void createTopPanel() {
         top = new JPanel();
+        top.setPreferredSize(new Dimension(100, 100));
         top.setBackground(Config.color2);
-        top.setLayout(new GridLayout(2, 2, 5, 5));
+        top.setLayout(new GridLayout(2, 2));
 
-        // label nazwa sfery
-        JLabel areaNameLabel = new JLabel("Nazwa sfery", SwingConstants.CENTER);
-        areaNameLabel.setBackground(Config.color3);
-        areaNameLabel.setOpaque(true);
-        areaNameLabel.setForeground(Config.color4);
-        areaNameLabel.setBorder(Config.border);
-        areaNameLabel.setFont(Config.font);
+        top.add(Helper.createLabel("Nazwa sfery"));
 
         // Label nazwa sfery
-        areaName = new JLabel("", SwingConstants.CENTER);
-        areaName.setBackground(Config.color3);
-        areaName.setOpaque(true);
-        areaName.setBorder(Config.border);
-        areaName.setFont(Config.font);
+        areaName = Helper.createLabel("");
+        top.add(areaName);
 
-        // label nazwa czynnika
-        JLabel factorNameLabel = new JLabel("Nazwa czynnika", SwingConstants.CENTER);
-        factorNameLabel.setBackground(Config.color3);
-        factorNameLabel.setOpaque(true);
-        factorNameLabel.setForeground(Config.color4);
-        factorNameLabel.setBorder(Config.border);
-        factorNameLabel.setFont(Config.font);
+        top.add(Helper.createLabel("Nazwa czynnika"));
 
         // textbox wprowadzenie nazwy czynnika
-        factorName = new JTextField("");
-        factorName.setBackground(Config.color3);
-        factorName.setOpaque(true);
-        factorName.setBorder(Config.border);
-        factorName.setFont(Config.font);
-        factorName.setHorizontalAlignment(JTextField.CENTER);
-        factorName.setForeground(Config.color1);
-        factorName.getDocument().addDocumentListener(new BindedTextField(factor, "name"));
-
-        top.add(areaNameLabel);
-        top.add(areaName);
-        top.add(factorNameLabel);
+        factorName = Helper.createBindedField("", factor, "name");
         top.add(factorName);
     }
 
@@ -100,23 +76,15 @@ public class FillFactor extends Window {
         center.setBackground(Config.color2);
 
         for (int i = 0; i < 3; i++) {
-            JLabel label = new JLabel(Config.factorPartsName[i], SwingConstants.CENTER);
-            label.setPreferredSize(new Dimension(150, 50));
-            label.setBorder(Config.border);
-            label.setOpaque(true);
-            label.setForeground(Config.color4);
-            label.setFont(Config.font);
-            label.setBackground(Config.color3);
-
-            center.add(label);
+            center.add(Helper.createLabel(Config.factorPartsName[i]));
 
             // wpływ
-            JTextField influence = createFactorPartsField(factor.rows.get(i).getInfluence(), factor.rows.get(i), "influence");
+            JTextField influence = Helper.createBindedField(factor.rows.get(i).getInfluence(), factor.rows.get(i), "influence");
             influenceTextFields.add(influence);
             center.add(influence);
 
             // prawdopodobieństwo
-            JTextField probability = createFactorPartsField(factor.rows.get(i).getProbability(), factor.rows.get(i), "probability");
+            JTextField probability = Helper.createBindedField(factor.rows.get(i).getProbability(), factor.rows.get(i), "probability");
             probabilityTextFields.add(probability);
             center.add(probability);
         }
@@ -136,20 +104,6 @@ public class FillFactor extends Window {
         b.setForeground(Config.color3);
         b.addActionListener(e -> addNewFactor());
         south.add(b);
-    }
-
-    private JTextField createFactorPartsField(String value, Object model, String fieldName) {
-        JTextField text = new JTextField(value, SwingConstants.CENTER);
-        text.setPreferredSize(new Dimension(150, 50));
-        text.setBorder(Config.border);
-        text.setOpaque(true);
-        text.setFont(Config.font);
-        text.setBackground(Config.color3);
-        text.setForeground(Config.color1);
-        text.setHorizontalAlignment(JTextField.CENTER);
-        text.getDocument().addDocumentListener(new BindedTextField(model, fieldName));
-
-        return text;
     }
 
     public void addNewFactor() {

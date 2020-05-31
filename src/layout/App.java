@@ -78,7 +78,7 @@ public class App {
 
         windows.add(new ChoosingAreas(this));
 
-        windows.add(new Scenario(this));
+        windows.add(new Scenario(this, "TEST"));
         windows.add(new Welcome(this));
 
         progressMax = windows.size() - 1;
@@ -93,6 +93,19 @@ public class App {
                 windows.add(windowI, new FillFactor(this, area, area.factors.get(i)));
             }
         }
+        progressMax = windows.size() - 1;
+    }
+
+    private void calculateScenariosWindows() {
+        windows.removeIf(w -> w instanceof Scenario);
+
+        int windowI = windowIndex;
+        for (Area area : dataManager.areas) {
+            for (int i = 0; i < area.factors.size(); i++, windowI++) {
+                windows.add(windowI, new FillFactor(this, area, area.factors.get(i)));
+            }
+        }
+
         progressMax = windows.size() - 1;
     }
 

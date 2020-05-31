@@ -21,7 +21,6 @@ public class BindedTextField implements DocumentListener {
         }
 
         this.fieldName = fieldName;
-
     }
 
     @Override
