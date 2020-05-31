@@ -72,12 +72,35 @@ public class ChoosingAreas extends Window {
         // TODO
         Area area = new Area(s);
         boolean en = false;
+        int enPos = 0;
         boolean dis = false;
-        enabledAreas.add(new Area("aaa"));
+        int disPos = -1;
+        for(Area a: disabledAreas){
+            disPos++;
+            if(a.name.equals(s)){
+                dis = true;
+                break;
+            }
+        }
+        for(Area a: enabledAreas){
+            enPos++;
+            if(a.name.equals(s)){
+                en = true;
+                break;
+            }
+        }
+        if(dis){
+            enabledAreas.add(disabledAreas.get(disPos));
+            disabledAreas.remove(disPos);
+        }
+        if(en){
+            disabledAreas.add(enabledAreas.get(enPos));
+            enabledAreas.remove(enPos);
+        }
         app.dataManager.areas = enabledAreas;
-        System.out.println(enabledAreas.toString());
+
+        enabledAreaTable = new AreasTable(enabledAreas, this);
         enabledAreaTable.repaint();
-        System.out.println("Aaa");
     }
 
     public void redo (JPanel panel, JPanel panel2,ArrayList<String> list){

@@ -33,9 +33,11 @@ public class AreasTable extends JPanel {
         }
 
         table.getSelectionModel().addListSelectionListener(event -> {
-            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-            // przerzucenie do czegoś
-            this.window.change(table.getValueAt(table.getSelectedRow(), 0).toString());
+            if (!event.getValueIsAdjusting()) {
+                System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+                // przerzucenie do czegoś
+                this.window.change(table.getValueAt(table.getSelectedRow(), 0).toString());
+            }
         });
 
         JScrollPane tableContainer = new JScrollPane(table);
