@@ -3,8 +3,10 @@ package layout;
 import app.Config;
 import model.Area;
 import model.DataManager;
+import model.Factor;
 import window.FillFactor;
 import window.ChoosingAreas;
+import window.Scenario;
 import window.Welcome;
 
 import javax.swing.*;
@@ -76,7 +78,7 @@ public class App {
 
         windows.add(new ChoosingAreas(this));
 
-        // TODO debug
+        windows.add(new Scenario(this));
         windows.add(new Welcome(this));
 
         progressMax = windows.size() - 1;
@@ -87,16 +89,21 @@ public class App {
 
         int windowI = windowIndex;
         for (Area area : dataManager.areas) {
-            for (int i = 0; i < Config.defaultFactorsCount; i++, windowI++) {
-                windows.add(windowI, new FillFactor(this, area));
+            for (int i = 0; i < area.factors.size(); i++, windowI++) {
+                windows.add(windowI, new FillFactor(this, area, area.factors.get(i)));
             }
         }
         progressMax = windows.size() - 1;
     }
 
     public void addFactorPage() {
-        windows.add(windowIndex + 1, new FillFactor(this, dataManager.getCurrentArea()));
+        Area currentArea = dataManager.getCurrentArea();
+        Factor newFactor = new Factor("Nowy czynnik");
+        currentArea.factors.add(newFactor);
+
+        windows.add(windowIndex + 1, new FillFactor(this, currentArea, newFactor));
         progressMax = windows.size() - 1;
+        bottom.adjustProgressBar();
     }
 
     public void prevPage() {
@@ -104,7 +111,6 @@ public class App {
         windowIndex--;
 
         bottom.adjustProgressBar();
-
         center.displayWindow(windows.get(windowIndex));
     }
 
@@ -117,7 +123,6 @@ public class App {
             calculateFactorWindows();
 
         bottom.adjustProgressBar();
-
         center.displayWindow(windows.get(windowIndex));
     }
 }

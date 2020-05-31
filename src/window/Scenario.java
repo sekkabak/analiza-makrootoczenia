@@ -1,15 +1,19 @@
 package window;
 
 import app.Config;
+import layout.App;
+import layout.Window;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class Scenario extends JPanel {
+public class Scenario extends Window {
     JPanel center;
 
-    public Scenario(String name) {
+    public Scenario(App app) {
+        super(app);
+
 //        this.setPreferredSize(new Dimension(Config.windowX, Config.windowY));
         this.setBackground(Config.color2);
         this.setBorder(new EmptyBorder(10, 0, 10, 0));
@@ -27,7 +31,8 @@ public class Scenario extends JPanel {
         top.setBackground(Config.color2);
         c.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel scenarioName = new JLabel("Scenariusz " + name, SwingConstants.CENTER);
+        // TODO
+        JLabel scenarioName = new JLabel("Scenariusz " + "TODO", SwingConstants.CENTER);
         scenarioName.setBackground(Config.color3);
         scenarioName.setForeground(Config.color4);
         scenarioName.setOpaque(true);
@@ -191,5 +196,10 @@ public class Scenario extends JPanel {
         label0.setForeground(Config.color4);
         label0.setOpaque(true);
         center.add(label0);
+    }
+
+    @Override
+    public void display() {
+
     }
 }

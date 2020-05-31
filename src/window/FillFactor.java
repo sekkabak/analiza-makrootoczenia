@@ -24,12 +24,10 @@ public class FillFactor extends Window {
 
     JPanel south;
 
-    public FillFactor(App app, Area area) {
+    public FillFactor(App app, Area area, Factor factor) {
         super(app);
         this.area = area;
-
-        this.factor = new Factor("Nowy czynnik");
-        this.area.factors.add(this.factor);
+        this.factor = factor;
 
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -155,11 +153,12 @@ public class FillFactor extends Window {
 
     @Override
     public void display() {
+        // TODO
         this.app.dataManager.setCurrentArea(area);
 
         this.areaName.setText(area.name);
         this.factorName.setText(factor.getName());
 
-        // TODO zmiana wartośći po wczytaniu nowego czynnika
+        // TODO zmiana wartości po wczytaniu nowego czynnika
     }
 }

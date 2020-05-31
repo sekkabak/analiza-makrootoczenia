@@ -6,7 +6,17 @@ import java.awt.*;
 
 public class Config {
     public static final String AppName = "Analiza makrootoczenia";
-    public static final String AppDescription = "ładny opis programu";
+//    public static final String AppDescription = "<html>" +
+//            "ładny opis programu" +
+//            "<br/>" +
+//            "<div style='background-color:red'>a to jest nowa linia</div>" +
+//            "<img width='400' src='https://www.zooplus.pl/magazyn/wp-content/uploads/2019/12/kot-przyb%C5%82%C4%99da-768x512.jpeg'></img>" +
+//            "</html>";
+    public static final String AppDescription = "<html>" +
+            "ładny opis programu" +
+            "<br/>" +
+            "<div style='background-color:red'>a to jest nowa linia</div>" +
+            "</html>";
 
     public static final Dimension initialState = new Dimension(600, 600);
 
