@@ -6,11 +6,11 @@ import layout.BindedTextField;
 import layout.Window;
 import model.Area;
 import model.Factor;
-import model.FactorPart;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class FillFactor extends Window {
     Area area;
@@ -21,6 +21,8 @@ public class FillFactor extends Window {
     JTextField factorName;
 
     JPanel center;
+    ArrayList<JTextField> influenceTextFields = new ArrayList<>();
+    ArrayList<JTextField> probabilityTextFields = new ArrayList<>();
 
     JPanel south;
 
@@ -98,7 +100,6 @@ public class FillFactor extends Window {
         center.setBackground(Config.color2);
 
         for (int i = 0; i < 3; i++) {
-            factor.rows[i] = new FactorPart(Config.factorPartsName[i]);
             JLabel label = new JLabel(Config.factorPartsName[i], SwingConstants.CENTER);
             label.setPreferredSize(new Dimension(150, 50));
             label.setBorder(Config.border);
@@ -110,10 +111,14 @@ public class FillFactor extends Window {
             center.add(label);
 
             // wpływ
-            center.add(createFactorPartsField(factor.rows[i].getInfluence(), factor.rows[i], "influence"));
+            JTextField influence = createFactorPartsField(factor.rows.get(i).getInfluence(), factor.rows.get(i), "influence");
+            influenceTextFields.add(influence);
+            center.add(influence);
 
             // prawdopodobieństwo
-            center.add(createFactorPartsField(factor.rows[i].getProbability(), factor.rows[i], "probability"));
+            JTextField probability = createFactorPartsField(factor.rows.get(i).getProbability(), factor.rows.get(i), "probability");
+            probabilityTextFields.add(probability);
+            center.add(probability);
         }
     }
 
@@ -153,12 +158,14 @@ public class FillFactor extends Window {
 
     @Override
     public void display() {
-        // TODO
         this.app.dataManager.setCurrentArea(area);
 
         this.areaName.setText(area.name);
         this.factorName.setText(factor.getName());
 
-        // TODO zmiana wartości po wczytaniu nowego czynnika
+        for (int i = 0; i < 3; i++) {
+            influenceTextFields.get(i).setText(factor.rows.get(i).getInfluence());
+            probabilityTextFields.get(i).setText(factor.rows.get(i).getProbability());
+        }
     }
 }
