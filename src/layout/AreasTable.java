@@ -43,4 +43,5 @@ public class AreasTable extends JPanel {
         JScrollPane tableContainer = new JScrollPane(table);
         this.add(tableContainer, BorderLayout.CENTER);
     }
+    
 }

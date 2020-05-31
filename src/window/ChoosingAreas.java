@@ -22,6 +22,9 @@ public class ChoosingAreas extends Window {
     AreasTable disabledAreaTable;
     AreasTable enabledAreaTable = new AreasTable(enabledAreas, this);
 
+    JPanel jPanelForDisabled = new JPanel();
+    JPanel jPanelForEnabled = new JPanel();
+
     JButton buttonForAdd = new JButton("+");
     JTextField textFieldForAddingSpheres = new JTextField();
     ArrayList<String> listToTakeFrom = new ArrayList<>();
@@ -35,13 +38,16 @@ public class ChoosingAreas extends Window {
         setBorder(new EmptyBorder(10, 0, 10, 0));
         setLayout(new GridLayout());
 
-        //TODO rzeczy do ustawienia: disabledAreas, enabledAreas, buttonForAdd, textFieldForAddingSpheres
+        //TODO rzeczy do ustawienia: jPanelForDisabled, jPanelForEnabled, buttonForAdd, textFieldForAddingSpheres
 
         initArea();
         disabledAreaTable = new AreasTable(disabledAreas, this);
 
-        add(disabledAreaTable);
-        add(enabledAreaTable);
+
+        jPanelForDisabled.add(disabledAreaTable);
+        jPanelForEnabled.add(enabledAreaTable);
+        add(jPanelForDisabled);
+        add(jPanelForEnabled);
 
         buttonForAdd.addActionListener(e -> {
             if(!textFieldForAddingSpheres.getText().equals("")) {
@@ -50,10 +56,10 @@ public class ChoosingAreas extends Window {
             }
             textFieldForAddingSpheres.setText("");
             app.dataManager.areas = enabledAreas;
-            this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+            jPanelForDisabled.remove(disabledAreaTable); jPanelForEnabled.remove(enabledAreaTable);
             enabledAreaTable = new AreasTable(enabledAreas, this);
             disabledAreaTable = new AreasTable(disabledAreas, this);
-            this.add(disabledAreaTable); this.add(enabledAreaTable);
+            jPanelForDisabled.add(disabledAreaTable); jPanelForEnabled.add(enabledAreaTable);
             this.validate();
         });
 
@@ -101,10 +107,19 @@ public class ChoosingAreas extends Window {
             enabledAreas.remove(PositionInEnabledTable);
         }
         app.dataManager.areas = enabledAreas;
-        this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+//        this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+        jPanelForDisabled.remove(disabledAreaTable); jPanelForEnabled.remove(enabledAreaTable);
         enabledAreaTable = new AreasTable(enabledAreas, this);
         disabledAreaTable = new AreasTable(disabledAreas, this);
-        this.add(disabledAreaTable); this.add(enabledAreaTable);
+        jPanelForDisabled.add(disabledAreaTable); jPanelForEnabled.add(enabledAreaTable);
+//        enabledAreaTable.revalidate();
+//        enabledAreaTable.repaint();
+//        disabledAreaTable.revalidate();
+//        disabledAreaTable.repaint();
+//        this.add(disabledAreaTable); this.add(enabledAreaTable);
+//        this.repaint();
+
+
         this.validate();
     }
 
