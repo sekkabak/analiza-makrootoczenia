@@ -15,13 +15,9 @@ import java.util.ArrayList;
 public class AreasTable extends JPanel {
     ChoosingAreas window;
 
-    public AreasTable(ChoosingAreas window) {
-        this.window = window;
-//        this.window.enabledAreas
-
-
+    public AreasTable(ArrayList<Area> areas, ChoosingAreas window) {
         this.setLayout(new BorderLayout());
-
+        this.window = window;
         JTable table = new JTable(new CustomTableModel());
         table.setRowHeight(50);
         table.setFont(Config.font);
@@ -30,14 +26,16 @@ public class AreasTable extends JPanel {
         CustomTableModel model = (CustomTableModel) table.getModel();
         model.addColumn("Areas");
 
-//        for (Area x : areas) {
-//            model.addRow(new Object[]{x.name});
-//        }
+
+
+        for (Area x : areas) {
+            model.addRow(new Object[]{x.name});
+        }
 
         table.getSelectionModel().addListSelectionListener(event -> {
-//            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
             // przerzucenie do czegoś
-            this.window.change();
+            this.window.change(table.getValueAt(table.getSelectedRow(), 0).toString());
         });
 
         JScrollPane tableContainer = new JScrollPane(table);

@@ -20,6 +20,10 @@ import model.DataManager;
 public class ChoosingAreas extends Window {
     public ArrayList<Area> disabledAreas = new ArrayList<>();
     public ArrayList<Area> enabledAreas = new ArrayList<>();
+    public ArrayList<Area> areasToThrow = new ArrayList<>();
+
+    AreasTable disabledAreaTable;
+    AreasTable enabledAreaTable = new AreasTable(enabledAreas, this);
 
     JPanel pToTakeFrom = new JPanel();
     JPanel pToPutInside = new JPanel();
@@ -38,42 +42,42 @@ public class ChoosingAreas extends Window {
         pToTakeFrom.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         pToTakeFrom.setLayout(new GridLayout(4, 1));
         pToTakeFrom.setPreferredSize(new Dimension(120,130));
-
         pToPutInside.setPreferredSize(new Dimension(120, 130));
         pToPutInside.setBorder(new EmptyBorder(0,0,0,10));
-//        pToTakeFrom.setBounds(60, 100, 120, 130);
         pToPutInside.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         pToPutInside.setLayout(new GridLayout(4, 1));
-//        pToPutInside.setBounds(220, 100, 120, 130);
-//        badd.setBounds(300, 300, 50, 30);
-        initList();
-
-        new AreasTable(this);
-
-        // dodaje nową sfere
+        initArea();
+        disabledAreaTable = new AreasTable(disabledAreas, this);
+        add(disabledAreaTable);
+        add(enabledAreaTable);
         badd.addActionListener(e -> {
             if(!jfieldForSphere.getText().equals("")) {
-                listToBin.add(jfieldForSphere.getText());
-                listToPut.add(jfieldForSphere.getText());
+                areasToThrow.add(new Area(jfieldForSphere.getText()));
+                enabledAreas.add(new Area(jfieldForSphere.getText()));
             }
             jfieldForSphere.setText("");
             redo(pToPutInside, pToTakeFrom, listToPut);
         });
 
-//        jfieldForSphere.setBounds(200, 300, 90, 30);
-        add(pToTakeFrom);
-        add(pToPutInside);
-        add(badd);
-        add(jfieldForSphere);
-
-//        borderLayout.addLayoutComponent(pToTakeFrom, BorderLayout.WEST);
-//        borderLayout.addLayoutComponent(pToTakeFrom, BorderLayout.EAST);
-//        borderLayout.addLayoutComponent(jfieldForSphere, BorderLayout.SOUTH);
-//        borderLayout.addLayoutComponent(badd, BorderLayout.SOUTH);
-
+//        add(pToTakeFrom);
+//        add(pToPutInside);
+//        add(badd);
+//        add(jfieldForSphere);
 
         addToJpanel(pToTakeFrom, pToPutInside);
         setVisible(false);
+    }
+
+    public void change(String s) {
+        // TODO
+        Area area = new Area(s);
+        boolean en = false;
+        boolean dis = false;
+        enabledAreas.add(new Area("aaa"));
+        app.dataManager.areas = enabledAreas;
+        System.out.println(enabledAreas.toString());
+        enabledAreaTable.repaint();
+        System.out.println("Aaa");
     }
 
     public void redo (JPanel panel, JPanel panel2,ArrayList<String> list){
@@ -152,7 +156,6 @@ public class ChoosingAreas extends Window {
 
         recalcData();
     }
-
     public boolean checkIfAdd(ArrayList<String> s, String name){
         if(s.size() != 0) {
             for (String value : s) {
@@ -163,15 +166,14 @@ public class ChoosingAreas extends Window {
         return true;
     }
 
-    public void initList(){
+    public void initArea() {
         Collections.addAll(listToTakeFrom, Config.initialAreas);
-
-//        for (String x : Config.initialAreas) {
-//            allAreas.add(new Area(x));
-//        }
-//
-//        DataManager a = app.dataManager;
+        for (String s : listToTakeFrom) {
+            disabledAreas.add(new Area(s));
+        }
     }
+
+
 
     // TODO XD!
     public void recalcData() {
@@ -188,16 +190,13 @@ public class ChoosingAreas extends Window {
 //        app.dataManager.areas = enabledAreas;
     }
 
-    public void change() {
-        // TODO
-        app.dataManager.areas = enabledAreas;
-    }
+
 
     @Override
     public void display() {
         // TODO przenieść wszystkie ustawienia danych do tej metody
         // dane należy pobierać z app.dataManager
-
-
+        enabledAreas = app.dataManager.areas;
     }
+
 }
