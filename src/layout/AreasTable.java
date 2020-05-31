@@ -27,17 +27,15 @@ public class AreasTable {
         for(int i = 0; i< 100; i++)
             model.addRow(new Object[]{"coś"+i});
 
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            public void valueChanged(ListSelectionEvent event) {
-                // do some actions here, for example
-                // print first column value from selected row
-                System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-            }
+        table.getSelectionModel().addListSelectionListener(event -> {
+            // do some actions here, for example
+            // print first column value from selected row
+            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
         });
 
         JScrollPane tableContainer = new JScrollPane(table);
-
         panel.add(tableContainer, BorderLayout.CENTER);
+
         frame.getContentPane().add(panel);
 
         frame.pack();
