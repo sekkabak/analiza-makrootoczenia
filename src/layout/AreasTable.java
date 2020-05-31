@@ -22,6 +22,7 @@ public class AreasTable extends JPanel {
         table.setRowHeight(50);
         table.setFont(Config.font);
         table.setTableHeader(null);
+        table.setBackground(Config.color3);
 
         CustomTableModel model = (CustomTableModel) table.getModel();
         model.addColumn("Areas");
@@ -41,6 +42,7 @@ public class AreasTable extends JPanel {
         });
 
         JScrollPane tableContainer = new JScrollPane(table);
+        tableContainer.getViewport().setBackground(Config.color3);
         this.add(tableContainer, BorderLayout.CENTER);
     }
 }

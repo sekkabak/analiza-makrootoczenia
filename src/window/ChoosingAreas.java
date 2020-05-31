@@ -26,22 +26,49 @@ public class ChoosingAreas extends Window {
     JTextField textFieldForAddingSpheres = new JTextField();
     ArrayList<String> listToTakeFrom = new ArrayList<>();
 
-
+    JPanel up;
+    JPanel down;
 
     public ChoosingAreas(App app) {
         super(app);
         setBackground(Config.color2);
         // TODO trzeba to zrobić chociaż trochę responsywnie
         setBorder(new EmptyBorder(10, 0, 10, 0));
-        setLayout(new GridLayout());
 
         //TODO rzeczy do ustawienia: disabledAreas, enabledAreas, buttonForAdd, textFieldForAddingSpheres
 
         initArea();
         disabledAreaTable = new AreasTable(disabledAreas, this);
 
-        add(disabledAreaTable);
-        add(enabledAreaTable);
+        up = new JPanel();
+        up.setBackground(Config.color2);
+        down = new JPanel();
+        down.setBackground(Config.color2);
+
+        GridLayout gL = new GridLayout(1,2,10,0);
+        setLayout(new GridLayout(2,1));
+
+        gL.setHgap(20);
+
+        add(up);
+        add(down);
+
+        enabledAreaTable.setBackground(Config.color3);
+        disabledAreaTable.setBackground(Config.color3);
+
+        up.setBorder(new EmptyBorder(10, 10, 10, 10));
+        up.add(disabledAreaTable);
+        up.add(enabledAreaTable);
+        up.setLayout(gL);
+
+        buttonForAdd.setPreferredSize(new Dimension(50,50));
+        buttonForAdd.setBackground(Config.color1);
+        buttonForAdd.setForeground(Config.color3);
+
+        textFieldForAddingSpheres.setPreferredSize(new Dimension(300,50));
+        textFieldForAddingSpheres.setBackground(Config.color3);
+        textFieldForAddingSpheres.setForeground(Config.color1);
+        textFieldForAddingSpheres.setFont(Config.font);
 
         buttonForAdd.addActionListener(e -> {
             if(!textFieldForAddingSpheres.getText().equals("")) {
@@ -57,9 +84,10 @@ public class ChoosingAreas extends Window {
             this.validate();
         });
 
-        add(buttonForAdd);
-        add(textFieldForAddingSpheres);
-        
+        down.setBorder(new EmptyBorder(10, 10, 10, 10));
+        down.add(buttonForAdd);
+        down.add(textFieldForAddingSpheres);
+
     }
 
     public void change(String s) {
