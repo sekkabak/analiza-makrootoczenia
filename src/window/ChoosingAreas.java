@@ -44,6 +44,8 @@ public class ChoosingAreas extends Window {
         initArea();
         disabledAreaTable = new AreasTable(disabledAreas, this);
 
+        jPanelForDisabled.setLayout(new GridLayout(0, 1));
+        jPanelForEnabled.setLayout(new GridLayout(0, 1));
 
         jPanelForDisabled.add(disabledAreaTable);
         jPanelForEnabled.add(enabledAreaTable);
