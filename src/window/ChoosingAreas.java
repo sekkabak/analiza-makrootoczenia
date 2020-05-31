@@ -1,21 +1,18 @@
 package window;
 
+import app.Config;
 import layout.App;
 import layout.AreasTable;
 import layout.Window;
+import model.Area;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.stream.Collectors;
 
-import app.Config;
-import model.Area;
-import model.DataManager;
 
 public class ChoosingAreas extends Window {
     public ArrayList<Area> disabledAreas = new ArrayList<>();
@@ -25,13 +22,11 @@ public class ChoosingAreas extends Window {
     AreasTable disabledAreaTable;
     AreasTable enabledAreaTable = new AreasTable(enabledAreas, this);
 
-    JPanel pToTakeFrom = new JPanel();
-    JPanel pToPutInside = new JPanel();
-    JButton badd = new JButton("+");
-    JTextField jfieldForSphere= new JTextField();
+    JButton buttonForAdd = new JButton("+");
+    JTextField textFieldForAddingSpheres = new JTextField();
     ArrayList<String> listToTakeFrom = new ArrayList<>();
-    ArrayList<String> listToPut = new ArrayList<>();
-    ArrayList<String> listToBin = new ArrayList<>();
+
+
 
     public ChoosingAreas(App app) {
         super(app);
@@ -39,154 +34,78 @@ public class ChoosingAreas extends Window {
         // TODO trzeba to zrobić chociaż trochę responsywnie
         setBorder(new EmptyBorder(10, 0, 10, 0));
         setLayout(new GridLayout());
-        pToTakeFrom.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        pToTakeFrom.setLayout(new GridLayout(4, 1));
-        pToTakeFrom.setPreferredSize(new Dimension(120,130));
-        pToPutInside.setPreferredSize(new Dimension(120, 130));
-        pToPutInside.setBorder(new EmptyBorder(0,0,0,10));
-        pToPutInside.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        pToPutInside.setLayout(new GridLayout(4, 1));
+
+        //TODO rzeczy do ustawienia: disabledAreas, enabledAreas, buttonForAdd, textFieldForAddingSpheres
+
         initArea();
         disabledAreaTable = new AreasTable(disabledAreas, this);
+
         add(disabledAreaTable);
         add(enabledAreaTable);
-        badd.addActionListener(e -> {
-            if(!jfieldForSphere.getText().equals("")) {
-                areasToThrow.add(new Area(jfieldForSphere.getText()));
-                enabledAreas.add(new Area(jfieldForSphere.getText()));
+
+        buttonForAdd.addActionListener(e -> {
+            if(!textFieldForAddingSpheres.getText().equals("")) {
+                areasToThrow.add(new Area(textFieldForAddingSpheres.getText()));
+                enabledAreas.add(new Area(textFieldForAddingSpheres.getText()));
             }
-            jfieldForSphere.setText("");
-            redo(pToPutInside, pToTakeFrom, listToPut);
+            textFieldForAddingSpheres.setText("");
+            app.dataManager.areas = enabledAreas;
+            this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+            enabledAreaTable = new AreasTable(enabledAreas, this);
+            disabledAreaTable = new AreasTable(disabledAreas, this);
+            this.add(disabledAreaTable); this.add(enabledAreaTable);
+            this.validate();
         });
 
-//        add(pToTakeFrom);
-//        add(pToPutInside);
-//        add(badd);
-//        add(jfieldForSphere);
-
-        addToJpanel(pToTakeFrom, pToPutInside);
-        setVisible(false);
+        add(buttonForAdd);
+        add(textFieldForAddingSpheres);
+        
     }
 
     public void change(String s) {
         // TODO
-        Area area = new Area(s);
-        boolean en = false;
-        int enPos = 0;
-        boolean dis = false;
-        int disPos = -1;
+        boolean ifInEnabledTable = false;
+        int PositionInEnabledTable = 0;
+        boolean ifInDisabledTable = false;
+        int PositionInDisabledTable = 0;
+        boolean ifToTrash = false;
         for(Area a: disabledAreas){
-            disPos++;
             if(a.name.equals(s)){
-                dis = true;
+                ifInDisabledTable = true;
                 break;
             }
+            PositionInDisabledTable++;
         }
         for(Area a: enabledAreas){
-            enPos++;
             if(a.name.equals(s)){
-                en = true;
+                ifInEnabledTable = true;
                 break;
             }
+            PositionInEnabledTable++;
         }
-        if(dis){
-            enabledAreas.add(disabledAreas.get(disPos));
-            disabledAreas.remove(disPos);
-        }
-        if(en){
-            disabledAreas.add(enabledAreas.get(enPos));
-            enabledAreas.remove(enPos);
-        }
-        app.dataManager.areas = enabledAreas;
-
-        enabledAreaTable = new AreasTable(enabledAreas, this);
-        enabledAreaTable.repaint();
-    }
-
-    public void redo (JPanel panel, JPanel panel2,ArrayList<String> list){
-        panel.setLayout(new GridLayout(list.size(), 1));
-        panel.removeAll();
-        for (String s : list) {
-            JLabel jLabel = new JLabel(s, SwingConstants.CENTER);
-            jLabel.setFont(Config.font);
-            jLabel.setBackground(Config.color3);
-            jLabel.setOpaque(true);
-            jLabel.setForeground(Config.color1);
-            jLabel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-            jLabel.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if(checkIfAdd(listToBin, jLabel.getText())){
-                        listToTakeFrom.add(jLabel.getText());
-                    }
-                    listToPut.remove(jLabel.getText());
-                    panel.remove(jLabel);
-//                    GridLayout gr = new GridLayout(list.size(), 1);
-//                    panel.setLayout(gr);
-                    panel.validate();
-                    panel.repaint();
-                    addToJpanel(panel2, panel);
-                }
-                @Override
-                public void mousePressed(MouseEvent e) { }
-                @Override
-                public void mouseReleased(MouseEvent e) { }
-                @Override
-                public void mouseEntered(MouseEvent e) { }
-                @Override
-                public void mouseExited(MouseEvent e) { }
-            });
-            panel.add(jLabel);
-        }
-        panel.validate();
-
-        recalcData();
-    }
-    public void addToJpanel(JPanel panel, JPanel panel2) {
-        panel.setLayout(new GridLayout(listToTakeFrom.size(), 1));
-        panel.removeAll();
-        for(int i = 0; i < listToTakeFrom.size(); i++) {
-            JLabel jLabel = new JLabel(listToTakeFrom.get(i), SwingConstants.CENTER);
-            jLabel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-            jLabel.setFont(Config.font);
-            jLabel.setBackground(Config.color3);
-            jLabel.setOpaque(true);
-            jLabel.setForeground(Config.color1);
-            panel.add(jLabel);
-            jLabel.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    listToPut.add(jLabel.getText());
-                    listToTakeFrom.remove(jLabel.getText());
-                    panel.remove(jLabel);
-                    GridLayout gr = new GridLayout(listToTakeFrom.size(), 1);
-                    panel.setLayout(gr);
-                    panel.validate();
-                    panel.repaint();
-                    redo(panel2, panel, listToPut);
-                }
-                @Override
-                public void mousePressed(MouseEvent e) { }
-                @Override
-                public void mouseReleased(MouseEvent e) { }
-                @Override
-                public void mouseEntered(MouseEvent e) { }
-                @Override
-                public void mouseExited(MouseEvent e) { }
-            });
-        }
-        panel.validate();
-
-        recalcData();
-    }
-    public boolean checkIfAdd(ArrayList<String> s, String name){
-        if(s.size() != 0) {
-            for (String value : s) {
-                if (name.equals(value))
-                    return false;
+        for(Area a: areasToThrow){
+            if(a.name.equals(s)){
+                ifToTrash = true;
             }
         }
-        return true;
+        if(ifInDisabledTable){
+            if(!ifToTrash) {
+                enabledAreas.add(disabledAreas.get(PositionInDisabledTable));
+            }
+            disabledAreas.remove(PositionInDisabledTable);
+        }
+        if(ifInEnabledTable){
+            if(!ifToTrash) {
+                disabledAreas.add(enabledAreas.get(PositionInEnabledTable));
+            }
+            enabledAreas.remove(PositionInEnabledTable);
+        }
+        app.dataManager.areas = enabledAreas;
+        this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+        enabledAreaTable = new AreasTable(enabledAreas, this);
+        disabledAreaTable = new AreasTable(disabledAreas, this);
+        this.add(disabledAreaTable); this.add(enabledAreaTable);
+        this.validate();
     }
 
     public void initArea() {
@@ -196,30 +115,8 @@ public class ChoosingAreas extends Window {
         }
     }
 
-
-
-    // TODO XD!
-    public void recalcData() {
-//        enabledAreas.clear();
-//
-//        for(String s : listToPut) {
-//            ArrayList<Area> res = (ArrayList<Area>) allAreas.stream()
-//                    .filter(x -> x.name.equals(s))
-//                    .collect(Collectors.toList());
-//            if(res.size() > 0)
-//                enabledAreas.add(res.get(0));
-//        }
-//
-//        app.dataManager.areas = enabledAreas;
-    }
-
-
-
     @Override
     public void display() {
-        // TODO przenieść wszystkie ustawienia danych do tej metody
-        // dane należy pobierać z app.dataManager
         enabledAreas = app.dataManager.areas;
     }
-
 }
