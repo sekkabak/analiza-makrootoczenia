@@ -22,6 +22,9 @@ public class ChoosingAreas extends Window {
     AreasTable disabledAreaTable;
     AreasTable enabledAreaTable = new AreasTable(enabledAreas, this);
 
+    JPanel jPanelForDisabled = new JPanel();
+    JPanel jPanelForEnabled = new JPanel();
+
     JButton buttonForAdd = new JButton("+");
     JTextField textFieldForAddingSpheres = new JTextField();
     ArrayList<String> listToTakeFrom = new ArrayList<>();
@@ -34,11 +37,16 @@ public class ChoosingAreas extends Window {
         setBackground(Config.color2);
         // TODO trzeba to zrobić chociaż trochę responsywnie
         setBorder(new EmptyBorder(10, 0, 10, 0));
+        setLayout(new GridLayout());
 
         //TODO rzeczy do ustawienia: disabledAreas, enabledAreas, buttonForAdd, textFieldForAddingSpheres
 
         initArea();
         disabledAreaTable = new AreasTable(disabledAreas, this);
+
+
+        jPanelForDisabled.add(disabledAreaTable);
+        jPanelForEnabled.add(enabledAreaTable);
 
         up = new JPanel();
         up.setBackground(Config.color2);
@@ -57,8 +65,8 @@ public class ChoosingAreas extends Window {
         disabledAreaTable.setBackground(Config.color3);
 
         up.setBorder(new EmptyBorder(10, 10, 10, 10));
-        up.add(disabledAreaTable);
-        up.add(enabledAreaTable);
+        up.add(jPanelForDisabled);
+        up.add(jPanelForEnabled);
         up.setLayout(gL);
 
         buttonForAdd.setPreferredSize(new Dimension(50,50));
@@ -77,10 +85,10 @@ public class ChoosingAreas extends Window {
             }
             textFieldForAddingSpheres.setText("");
             app.dataManager.areas = enabledAreas;
-            this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+            jPanelForDisabled.remove(disabledAreaTable); jPanelForEnabled.remove(enabledAreaTable);
             enabledAreaTable = new AreasTable(enabledAreas, this);
             disabledAreaTable = new AreasTable(disabledAreas, this);
-            this.add(disabledAreaTable); this.add(enabledAreaTable);
+            jPanelForDisabled.add(disabledAreaTable); jPanelForEnabled.add(enabledAreaTable);
             this.validate();
         });
 
@@ -129,10 +137,19 @@ public class ChoosingAreas extends Window {
             enabledAreas.remove(PositionInEnabledTable);
         }
         app.dataManager.areas = enabledAreas;
-        this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+//        this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+        jPanelForDisabled.remove(disabledAreaTable); jPanelForEnabled.remove(enabledAreaTable);
         enabledAreaTable = new AreasTable(enabledAreas, this);
         disabledAreaTable = new AreasTable(disabledAreas, this);
-        this.add(disabledAreaTable); this.add(enabledAreaTable);
+        jPanelForDisabled.add(disabledAreaTable); jPanelForEnabled.add(enabledAreaTable);
+//        enabledAreaTable.revalidate();
+//        enabledAreaTable.repaint();
+//        disabledAreaTable.revalidate();
+//        disabledAreaTable.repaint();
+//        this.add(disabledAreaTable); this.add(enabledAreaTable);
+//        this.repaint();
+
+
         this.validate();
     }
 

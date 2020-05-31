@@ -45,4 +45,5 @@ public class AreasTable extends JPanel {
         tableContainer.getViewport().setBackground(Config.color3);
         this.add(tableContainer, BorderLayout.CENTER);
     }
+    
 }
