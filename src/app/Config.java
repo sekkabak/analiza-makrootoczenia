@@ -15,6 +15,8 @@ public class Config {
     public static final String[] influenceValidList = {"-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5"};
     public static final String[] factorPartsName = {"Wzrost", "Stabilizacja", "Regres"};
 
+    public static final int defaultFactorsCount = 5;
+
     public static final String[] initialAreas = {
             "Polityczna",
             "Ekonomiczna",

@@ -10,10 +10,9 @@ import window.Welcome;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class App {
-    DataManager dataManager;
+    public DataManager dataManager;
 
     JFrame frame;
     Top top;
@@ -30,12 +29,6 @@ public class App {
 
     public App() {
         dataManager = new DataManager();
-
-        // TODO DEBUG
-        Area a1 = new Area("Sfera 1");
-        Area a2 = new Area("Sfera 2");
-        dataManager.areas.add(a1);
-        dataManager.areas.add(a2);
 
         init();
         createWindows();
@@ -80,19 +73,30 @@ public class App {
         windows = new ArrayList<>();
 
         windows.add(new Welcome(this));
+
         windows.add(new ChoosingAreas(this));
 
-        windows.add(new FillFactor(this, dataManager.getCurrentArea()));
+        // TODO debug
+        windows.add(new Welcome(this));
 
         progressMax = windows.size() - 1;
     }
 
     private void calculateFactorWindows() {
-//        windows.removeIf(w -> w instanceof FillFactor);
+        windows.removeIf(w -> w instanceof FillFactor);
 
-//        ArrayList<Window> Factors = new ArrayList<>();
-//        for()
+        int windowI = windowIndex;
+        for (Area area : dataManager.areas) {
+            for (int i = 0; i < Config.defaultFactorsCount; i++, windowI++) {
+                windows.add(windowI, new FillFactor(this, area));
+            }
+        }
+        progressMax = windows.size() - 1;
+    }
 
+    public void addFactorPage() {
+        windows.add(windowIndex + 1, new FillFactor(this, dataManager.getCurrentArea()));
+        progressMax = windows.size() - 1;
     }
 
     public void prevPage() {
@@ -108,8 +112,11 @@ public class App {
         progress++;
         windowIndex++;
 
+        // tworzy ekrany dla czynników po wybraniu sfer
+        if (windowIndex > 0 && windows.get(windowIndex - 1) instanceof ChoosingAreas)
+            calculateFactorWindows();
+
         bottom.adjustProgressBar();
-        calculateFactorWindows();
 
         center.displayWindow(windows.get(windowIndex));
     }

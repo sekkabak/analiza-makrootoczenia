@@ -150,12 +150,13 @@ public class FillFactor extends Window {
     }
 
     public void addNewFactor() {
-        // TODO
-        System.out.println("nic");
+        app.addFactorPage();
     }
 
     @Override
     public void display() {
+        this.app.dataManager.setCurrentArea(area);
+
         this.areaName.setText(area.name);
         this.factorName.setText(factor.getName());
 
