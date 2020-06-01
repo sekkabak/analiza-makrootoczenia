@@ -1,12 +1,22 @@
 package layout;
 
+import model.FirstTwoScenarios;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Plot extends JPanel {
 
     //TODO zliczanie ilości sfer
-    int spheresCounter = 3;
+    public ArrayList<FirstTwoScenarios> PositiveScenario;
+    public ArrayList<FirstTwoScenarios> NegativeScenario;
+    public ArrayList<FirstTwoScenarios> firstTwoScenarios;
+    public ArrayList<Integer> tableOfPlaces = new ArrayList<>();
+    int spheresCounter = 10;
+    int space = 0;
+
+
 
     Plot(){
         setPreferredSize(new Dimension(700, 500));
@@ -29,22 +39,24 @@ public class Plot extends JPanel {
         //loop for rest
         int counter = 1;
         while(counter < spheresCounter+1) {
-            int var = (getHeight() - 20)/(spheresCounter+1);
+            int var = getHeight() - counter * (getHeight())/(spheresCounter+1) - 20;
+            tableOfPlaces.add(var);
+            System.out.println(var);
             g.setColor(Color.black);
-            g.drawLine(40, counter * var, getWidth() - 40,  counter * var);
-            g2d.fillOval(getWidth()/2 - 3, counter * var - 3, 6, 6);
-            drawArrowLine(g, 40 + 3, counter * var , 40 - 3, counter * var,
-                    getWidth()/100, getHeight()/100);
-            drawArrowLine(g, getWidth() - 40 - 3, counter * var , getWidth() - 40 + 3, counter * var,
-                    getWidth()/100, getHeight()/100);
+            g.drawLine(40, var, getWidth() - 40,  var);
+//            g2d.fillOval(getWidth()/2 - 3, counter * var - 3, 6, 6);
+//            drawArrowLine(g, 40 + 3, counter * var , 40 - 3, counter * var,
+//                    getWidth()/100, getHeight()/100);
+//            drawArrowLine(g, getWidth() - 40 - 3, counter * var , getWidth() - 40 + 3, counter * var,
+//                    getWidth()/100, getHeight()/100);
             counter++;
         }
         //vertical
-        drawArrowLine(g, getWidth()/2, 20+3, getWidth()/2, 20-3, getWidth()/100, getHeight()/100);
-        g.drawLine(getWidth()/2, getHeight()-20, getWidth()/2, 20);
+        drawArrowLine(g, getWidth()/2, 10+3, getWidth()/2, 10-3, getWidth()/100, getHeight()/100);
+        g.drawLine(getWidth()/2, getHeight()-20, getWidth()/2, 10);
         //numbers
         int spaceForNumbers = (getWidth()/2)/6;
-        System.out.println(spaceForNumbers);
+        space = spaceForNumbers;
             //positive
         for(int i = 0; i < 6; i++){
             g.drawLine(getWidth()/2+i*spaceForNumbers, getHeight() - 20 -3,
@@ -85,6 +97,11 @@ public class Plot extends JPanel {
         g.drawLine(x1, y1, x2, y2);
         g.fillPolygon(xpoints, ypoints, 3);
     }
+
+    public void drawRectangles(){
+
+    }
+
 
     public static void main(String[] args) {
         JFrame aaa = new JFrame();
