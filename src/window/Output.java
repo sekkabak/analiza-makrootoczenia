@@ -67,8 +67,8 @@ public class Output extends Window {
         Table t2 = new Table();
         t2.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Siła wpływu")));
 
-        int sizeI = app.dataManager.areas.size();
-        for (int i = 0; i < sizeI; i++) {
+        int sizeIO = app.dataManager.areas.size();
+        for (int i = 0; i < sizeIO; i++) {
             Area a = app.dataManager.areas.get(i);
             FirstTwoScenarios scenario = app.dataManager.optimisticScenario.get(i);
 
@@ -92,15 +92,24 @@ public class Output extends Window {
         r.html.add("<h2>Tabela 3. Scenariusz pesymistyczny</h2>");
         Table t3 = new Table();
         t3.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Siła wpływu")));
-        for (Area a : app.dataManager.areas) {
+        int sizeIP = app.dataManager.areas.size();
+        for (int i = 0; i < sizeIP; i++) {
+            Area a = app.dataManager.areas.get(i);
+            FirstTwoScenarios scenario = app.dataManager.pesimisticScenario.get(i);
+
             t3.addHeader(a.name, 2);
-            for (Factor f : a.factors) {
-                t3.addRow(new ArrayList<>(Arrays.asList(f.getName(), "")));
+
+            int size = a.factors.size();
+            for (int j = 0; j < size; j++) {
+                Factor f = a.factors.get(j);
+                t3.addRow(new ArrayList<>(Arrays.asList(f.getName(), scenario.infuences.get(j))));
             }
-            t3.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "")));
+
+            t3.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", scenario.calculateAvarage())));
         }
         r.html.add(t3.getContent());
         r.save();
+        r.html.add("<br><br>");
 
         //TODO
         // Scenariusz pesymistyczny
