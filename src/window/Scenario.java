@@ -104,14 +104,13 @@ public class Scenario extends Window {
         center.add(Helper.createLabel("Średnia"));
         JLabel average = Helper.createLabel(scenario1.average);
         labelsToUpdate.put(scenario1.getAverage, average);
-
         center.add(average);
 
         center.repaint();
     }
 
     private void autoFill1() {
-
+        // TODO
     }
 
     private void createFactors2() {
@@ -130,24 +129,34 @@ public class Scenario extends Window {
         center.add(Helper.createLabel("Siła wpływu „ujemna”"));
         center.add(Helper.createLabel("Siła wpływu „dodatnia”"));
 
-        for (Factor x : area.factors) {
+        int size = area.factors.size();
+        for (int i = 0; i < size; i++)
+        {
+            Factor x = area.factors.get(i);
             center.add(Helper.createLabel(x.getName()));
-            center.add(Helper.createField(""));
-            center.add(Helper.createField(""));
-            center.add(Helper.createField(""));
+            center.add(Helper.createBindedFieldList(scenario2.probability.get(i), scenario2, "probability", i, refresh));
+            center.add(Helper.createBindedFieldList(scenario2.negativeInfuences.get(i), scenario2, "negativeInfuences", i, refresh));
+            center.add(Helper.createBindedFieldList(scenario2.positiveInfuences.get(i), scenario2, "positiveInfuences", i, refresh));
         }
 
-        // TODO
         center.add(Helper.createLabel("Średnia"));
-        center.add(Helper.createLabel(""));
-        center.add(Helper.createLabel(""));
-        center.add(Helper.createLabel(""));
+        JLabel probabilityAverage = Helper.createLabel(scenario2.probabilityAverage);
+        labelsToUpdate.put(scenario2.getProbabilityAverage, probabilityAverage);
+        center.add(probabilityAverage);
+
+        JLabel negativeInfuenceAverage = Helper.createLabel(scenario2.negativeInfuenceAverage);
+        labelsToUpdate.put(scenario2.getNegativeInfuenceAverage, negativeInfuenceAverage);
+        center.add(negativeInfuenceAverage);
+
+        JLabel positiveInfuenceAverage = Helper.createLabel(scenario2.positiveInfuenceAverage);
+        labelsToUpdate.put(scenario2.getPositiveInfuenceAverage, positiveInfuenceAverage);
+        center.add(positiveInfuenceAverage);
 
         center.repaint();
     }
 
     private void autoFill2() {
-
+        // TODO
     }
 
     /**

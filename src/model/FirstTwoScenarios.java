@@ -14,7 +14,8 @@ public class FirstTwoScenarios {
     public FirstTwoScenarios(Area area) {
         this.area = area;
         this.infuences = new ArrayList<>();
-        for (Factor x : this.area.factors) {
+
+        for(int i = 0; i <  this.area.factors.size(); i++) {
             this.infuences.add("");
         }
 

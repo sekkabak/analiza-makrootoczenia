@@ -80,7 +80,7 @@ public class Output extends Window {
                 t2.addRow(new ArrayList<>(Arrays.asList(f.getName(), scenario.infuences.get(j))));
             }
 
-            t2.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", scenario.calculateAvarage())));
+            t2.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", scenario.average)));
         }
         r.html.add(t2.getContent());
         r.save();
