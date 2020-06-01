@@ -3,10 +3,7 @@ package window;
 import app.Config;
 import layout.App;
 import layout.Window;
-import model.Area;
-import model.Factor;
-import model.FactorPart;
-import model.FirstTwoScenarios;
+import model.*;
 import raport.Raport;
 import raport.Table;
 
@@ -116,12 +113,20 @@ public class Output extends Window {
         r.html.add("<h2>Tabela 4. Scenariusz najbardziej prawdopodobny</h2>");
         Table t4 = new Table();
         t4.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Prawdopodobieństwo", "Siła wpływu 'ujemna'", "Siła wpływu 'dodatnia'")));
-        for (Area a : app.dataManager.areas) {
+        int sizeIN = app.dataManager.areas.size();
+        for (int i = 0; i < sizeIN; i++) {
+            Area a = app.dataManager.areas.get(i);
+            SecondTwoScenarios scenario = app.dataManager.mostLikelyScenario.get(i);
+
             t4.addHeader(a.name, 4);
-            for (Factor f : a.factors) {
-                t4.addRow(new ArrayList<>(Arrays.asList(f.getName(), "", "", "")));
+
+            int size = a.factors.size();
+            for (int j = 0; j < size; j++) {
+                Factor f = a.factors.get(j);
+                t4.addRow(new ArrayList<>(Arrays.asList(f.getName(), scenario.probability.get(j), scenario.negativeInfuences.get(j), scenario.positiveInfuences.get(j))));
             }
-            t4.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "", "", "")));
+
+            t4.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "", scenario.negativeInfuenceAverage, scenario.positiveInfuenceAverage)));
         }
         r.html.add(t4.getContent());
         r.save();
@@ -131,12 +136,20 @@ public class Output extends Window {
         r.html.add("<h2>Tabela 5. Scenariusz niespodziankowy</h2>");
         Table t5 = new Table();
         t5.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Prawdopodobieństwo", "Siła wpływu 'ujemna'", "Siła wpływu 'dodatnia'")));
-        for (Area a : app.dataManager.areas) {
+        int sizeIS = app.dataManager.areas.size();
+        for (int i = 0; i < sizeIS; i++) {
+            Area a = app.dataManager.areas.get(i);
+            SecondTwoScenarios scenario = app.dataManager.unexpectedScenario.get(i);
+
             t5.addHeader(a.name, 4);
-            for (Factor f : a.factors) {
-                t5.addRow(new ArrayList<>(Arrays.asList(f.getName(), "", "", "")));
+
+            int size = a.factors.size();
+            for (int j = 0; j < size; j++) {
+                Factor f = a.factors.get(j);
+                t5.addRow(new ArrayList<>(Arrays.asList(f.getName(), scenario.probability.get(j), scenario.negativeInfuences.get(j), scenario.positiveInfuences.get(j))));
             }
-            t5.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "", "", "")));
+
+            t5.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "", scenario.negativeInfuenceAverage, scenario.positiveInfuenceAverage)));
         }
         r.html.add(t5.getContent());
         r.save();
