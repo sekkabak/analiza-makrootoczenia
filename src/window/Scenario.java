@@ -187,6 +187,7 @@ public class Scenario extends Window {
         for (int i = 0; i < size; i++) {
             Factor f = area.factors.get(i);
             String res = "";
+            String res1 = "";
             boolean isNegative = false;
             if (this.name.equals("najbardziej prawdopodobny")) {
                 double max = 0;
@@ -196,7 +197,8 @@ public class Scenario extends Window {
                         if (max < tmp) {
                             isNegative = Double.parseDouble(x.getInfluence()) < 0;
                             max = tmp;
-                            res = x.getInfluence();
+                            res = x.getProbability();
+                            res1 = x.getInfluence();
                         }
                     } catch (Exception ignored) {
                     }
@@ -209,7 +211,8 @@ public class Scenario extends Window {
                         if (min > tmp) {
                             isNegative = Double.parseDouble(x.getInfluence()) < 0;
                             min = tmp;
-                            res = x.getInfluence();
+                            res = x.getProbability();
+                            res1 = x.getInfluence();
                         }
                     } catch (Exception ignored) {
                     }
@@ -218,9 +221,9 @@ public class Scenario extends Window {
 
             scenario2.probability.set(i, res);
             if(isNegative) {
-                scenario2.negativeInfuences.set(i, res);
+                scenario2.negativeInfuences.set(i, res1);
             } else {
-                scenario2.positiveInfuences.set(i, res);
+                scenario2.positiveInfuences.set(i, res1);
             }
 
             scenario2.calculateProbabilityAverage();
