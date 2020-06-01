@@ -4,10 +4,7 @@ import app.Config;
 import model.Area;
 import model.DataManager;
 import model.Factor;
-import window.FillFactor;
-import window.ChoosingAreas;
-import window.Scenario;
-import window.Welcome;
+import window.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -78,7 +75,7 @@ public class App {
 
         windows.add(new ChoosingAreas(this));
 
-        windows.add(new Welcome(this));
+        windows.add(new Output(this));
 
         progressMax = windows.size() - 1;
     }

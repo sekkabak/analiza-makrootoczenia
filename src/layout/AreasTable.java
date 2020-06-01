@@ -27,16 +27,12 @@ public class AreasTable extends JPanel {
         CustomTableModel model = (CustomTableModel) table.getModel();
         model.addColumn("Areas");
 
-
-
         for (Area x : areas) {
             model.addRow(new Object[]{x.name});
         }
 
         table.getSelectionModel().addListSelectionListener(event -> {
             if (!event.getValueIsAdjusting()) {
-                System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-                // przerzucenie do czegoś
                 this.window.change(table.getValueAt(table.getSelectedRow(), 0).toString());
             }
         });

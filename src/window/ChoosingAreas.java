@@ -74,6 +74,7 @@ public class ChoosingAreas extends Window {
         buttonForAdd.setPreferredSize(new Dimension(50,50));
         buttonForAdd.setBackground(Config.color1);
         buttonForAdd.setForeground(Config.color3);
+        buttonForAdd.setFocusPainted(false);
 
         textFieldForAddingSpheres.setPreferredSize(new Dimension(300,50));
         textFieldForAddingSpheres.setBackground(Config.color3);
@@ -99,7 +100,6 @@ public class ChoosingAreas extends Window {
         down.setBorder(new EmptyBorder(10, 10, 10, 10));
         down.add(buttonForAdd);
         down.add(textFieldForAddingSpheres);
-
     }
 
     public void change(String s) {

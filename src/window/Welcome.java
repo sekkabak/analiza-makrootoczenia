@@ -5,7 +5,6 @@ import layout.Window;
 import app.Config;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Welcome extends Window {
     JCheckBox checkBox;
