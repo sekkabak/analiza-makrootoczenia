@@ -59,6 +59,7 @@ public class SecondTwoScenarios {
             } catch (Exception ignored) {
             }
         }
+        avg /= probability.size();
         return probabilityAverage = String.valueOf(avg);
     }
 
@@ -70,6 +71,7 @@ public class SecondTwoScenarios {
             } catch (Exception ignored) {
             }
         }
+        avg /= negativeInfuences.size();
         return negativeInfuenceAverage = String.valueOf(avg);
     }
 
@@ -81,6 +83,7 @@ public class SecondTwoScenarios {
             } catch (Exception ignored) {
             }
         }
+        avg /= positiveInfuences.size();
         return positiveInfuenceAverage = String.valueOf(avg);
     }
 }

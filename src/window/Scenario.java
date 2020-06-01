@@ -6,10 +6,7 @@ import layout.App;
 import layout.AvgGetter;
 import layout.AvgRefresh;
 import layout.Window;
-import model.Area;
-import model.Factor;
-import model.FirstTwoScenarios;
-import model.SecondTwoScenarios;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -67,15 +64,15 @@ public class Scenario extends Window {
 
     private void createFactors() {
         if (scenarioType == 1) {
-            createFactors1();
-            if(app.auto_fill) {
+            if (app.auto_fill) {
                 autoFill1();
             }
+            createFactors1();
         } else {
-            createFactors2();
-            if(app.auto_fill) {
+            if (app.auto_fill) {
                 autoFill2();
             }
+            createFactors2();
         }
     }
 
@@ -94,8 +91,7 @@ public class Scenario extends Window {
         center.add(Helper.createLabel("Siła wpływu"));
 
         int size = area.factors.size();
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             Factor x = area.factors.get(i);
             center.add(Helper.createLabel(x.getName()));
             center.add(Helper.createBindedFieldList(scenario1.infuences.get(i), scenario1, "infuences", i, refresh));
@@ -110,7 +106,39 @@ public class Scenario extends Window {
     }
 
     private void autoFill1() {
-        // TODO
+        int size = area.factors.size();
+        for (int i = 0; i < size; i++) {
+            Factor f = area.factors.get(i);
+            String res = "";
+            if (this.name.equals("optymistyczny")) {
+                double max = -5;
+                for (FactorPart x : f.rows) {
+                    try {
+                        double tmp = Double.parseDouble(x.getInfluence());
+                        if (max < tmp) {
+                            max = tmp;
+                            res = x.getInfluence();
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+            } else if (this.name.equals("pesymistyczny")) {
+                double min = 5;
+                for (FactorPart x : f.rows) {
+                    try {
+                        double tmp = Double.parseDouble(x.getInfluence());
+                        if (min > tmp) {
+                            min = tmp;
+                            res = x.getInfluence();
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+
+            scenario1.infuences.set(i, res);
+            scenario1.calculateAvarage();
+        }
     }
 
     private void createFactors2() {
@@ -130,8 +158,7 @@ public class Scenario extends Window {
         center.add(Helper.createLabel("Siła wpływu „dodatnia”"));
 
         int size = area.factors.size();
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             Factor x = area.factors.get(i);
             center.add(Helper.createLabel(x.getName()));
             center.add(Helper.createBindedFieldList(scenario2.probability.get(i), scenario2, "probability", i, refresh));
@@ -156,7 +183,50 @@ public class Scenario extends Window {
     }
 
     private void autoFill2() {
-        // TODO
+        int size = area.factors.size();
+        for (int i = 0; i < size; i++) {
+            Factor f = area.factors.get(i);
+            String res = "";
+            boolean isNegative = false;
+            if (this.name.equals("najbardziej prawdopodobny")) {
+                double max = 0;
+                for (FactorPart x : f.rows) {
+                    try {
+                        double tmp = Double.parseDouble(x.getProbability());
+                        if (max < tmp) {
+                            isNegative = Double.parseDouble(x.getInfluence()) < 0;
+                            max = tmp;
+                            res = x.getInfluence();
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+            } else if (this.name.equals("niespodziankowy")) {
+                double min = 1.0;
+                for (FactorPart x : f.rows) {
+                    try {
+                        double tmp = Double.parseDouble(x.getProbability());
+                        if (min > tmp) {
+                            isNegative = Double.parseDouble(x.getInfluence()) < 0;
+                            min = tmp;
+                            res = x.getInfluence();
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+
+            scenario2.probability.set(i, res);
+            if(isNegative) {
+                scenario2.negativeInfuences.set(i, res);
+            } else {
+                scenario2.positiveInfuences.set(i, res);
+            }
+
+            scenario2.calculateProbabilityAverage();
+            scenario2.calculateNegativeInfuenceAverage();
+            scenario2.calculatePositiveInfuenceAverage();
+        }
     }
 
     /**

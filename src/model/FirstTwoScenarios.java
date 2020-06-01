@@ -34,6 +34,7 @@ public class FirstTwoScenarios {
             } catch (Exception ignored) {
             }
         }
+        avg /= infuences.size();
         return average = String.valueOf(avg);
     }
 }
