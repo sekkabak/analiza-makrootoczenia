@@ -6,14 +6,18 @@ public class DataManager {
     private Area currentArea;
     public ArrayList<Area> areas;
 
-    public ArrayList<FirstTwoScenarios> firstTwoScenarios;
-    public ArrayList<SecondTwoScenarios> secondTwoScenarios;
+    public ArrayList<FirstTwoScenarios> optimisticScenario;
+    public ArrayList<FirstTwoScenarios> pesimisticScenario;
+    public ArrayList<SecondTwoScenarios> mostLikelyScenario;
+    public ArrayList<SecondTwoScenarios> unexpectedScenario;
 
     public DataManager() {
         this.areas = new ArrayList<>();
 
-        firstTwoScenarios = new ArrayList<>();
-        secondTwoScenarios = new ArrayList<>();
+        optimisticScenario = new ArrayList<>();
+        pesimisticScenario = new ArrayList<>();
+        mostLikelyScenario = new ArrayList<>();
+        unexpectedScenario = new ArrayList<>();
     }
 
     public void setCurrentArea(Area area) {
@@ -25,5 +29,12 @@ public class DataManager {
             return currentArea = areas.get(0);
 
         return currentArea;
+    }
+
+    public void clearScenarios() {
+        optimisticScenario.clear();
+        pesimisticScenario.clear();
+        mostLikelyScenario.clear();
+        unexpectedScenario.clear();
     }
 }

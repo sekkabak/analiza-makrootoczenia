@@ -4,6 +4,7 @@ import app.Config;
 import app.Helper;
 import layout.App;
 import layout.AvgGetter;
+import layout.AvgRefresh;
 import layout.Window;
 import model.Area;
 import model.Factor;
@@ -32,12 +33,19 @@ public class Scenario extends Window {
     SecondTwoScenarios scenario2;
 
     Map<AvgGetter, JLabel> labelsToUpdate = new HashMap<>();
+    AvgRefresh refresh = this::updateLabels;
 
-    public Scenario(App app, String name, Area area, int type) {
+    public Scenario(App app, String name, Area area, int type, Object scenario) {
         super(app);
         this.area = area;
         this.name = name;
         this.scenarioType = type;
+
+        if (type == 1) {
+            scenario1 = (FirstTwoScenarios) scenario;
+        } else {
+            scenario2 = (SecondTwoScenarios) scenario;
+        }
 
         setBorder(new EmptyBorder(10, 10, 10, 10));
         BorderLayout bl = new BorderLayout();
@@ -82,14 +90,15 @@ public class Scenario extends Window {
         center.setBorder(Config.border);
         center.setFont(Config.font);
 
-        scenario1 = new FirstTwoScenarios(area);
-
         center.add(Helper.createLabel("Czynniki"));
         center.add(Helper.createLabel("Siła wpływu"));
 
-        for (Factor x : area.factors) {
+        int size = area.factors.size();
+        for (int i = 0; i < size; i++)
+        {
+            Factor x = area.factors.get(i);
             center.add(Helper.createLabel(x.getName()));
-            center.add(Helper.createField(""));
+            center.add(Helper.createBindedFieldList(scenario1.infuences.get(i), scenario1, "infuences", i, refresh));
         }
 
         center.add(Helper.createLabel("Średnia"));

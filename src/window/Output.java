@@ -6,6 +6,7 @@ import layout.Window;
 import model.Area;
 import model.Factor;
 import model.FactorPart;
+import model.FirstTwoScenarios;
 import raport.Raport;
 import raport.Table;
 
@@ -61,17 +62,25 @@ public class Output extends Window {
         r.html.add("<br><br>");
 
 
-
         // Scenariusz optymstyczny
         r.html.add("<h2>Tabela 2. Scenariusz optymistyczny</h2>");
         Table t2 = new Table();
         t2.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Siła wpływu")));
-        for (Area a : app.dataManager.areas) {
+
+        int sizeI = app.dataManager.areas.size();
+        for (int i = 0; i < sizeI; i++) {
+            Area a = app.dataManager.areas.get(i);
+            FirstTwoScenarios scenario = app.dataManager.optimisticScenario.get(i);
+
             t2.addHeader(a.name, 2);
-            for (Factor f : a.factors) {
-                t2.addRow(new ArrayList<>(Arrays.asList(f.getName(), "")));
+
+            int size = a.factors.size();
+            for (int j = 0; j < size; j++) {
+                Factor f = a.factors.get(j);
+                t2.addRow(new ArrayList<>(Arrays.asList(f.getName(), scenario.infuences.get(j))));
             }
-            t2.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "")));
+
+            t2.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", scenario.calculateAvarage())));
         }
         r.html.add(t2.getContent());
         r.save();
@@ -125,14 +134,14 @@ public class Output extends Window {
 
 
         //first check if Desktop is supported by Platform or not
-        if(!Desktop.isDesktopSupported()){
+        if (!Desktop.isDesktopSupported()) {
             System.out.println("Desktop is not supported");
             return;
         }
 
         Desktop desktop = Desktop.getDesktop();
         File file = new File(r.filePath);
-        if(file.exists()) {
+        if (file.exists()) {
             try {
                 desktop.open(file);
             } catch (IOException e) {

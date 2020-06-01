@@ -94,6 +94,7 @@ public class ChoosingAreas extends Window {
             disabledAreaTable = new AreasTable(disabledAreas, this);
             jPanelForDisabled.add(disabledAreaTable); 
             jPanelForEnabled.add(enabledAreaTable);
+            app.areasChanged = true;
             this.validate();
         });
 
@@ -147,6 +148,7 @@ public class ChoosingAreas extends Window {
         disabledAreaTable = new AreasTable(disabledAreas, this);
         jPanelForDisabled.add(disabledAreaTable); 
         jPanelForEnabled.add(enabledAreaTable);
+        app.areasChanged = true;
 
         this.validate();
     }

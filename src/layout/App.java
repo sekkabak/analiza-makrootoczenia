@@ -1,9 +1,7 @@
 package layout;
 
 import app.Config;
-import model.Area;
-import model.DataManager;
-import model.Factor;
+import model.*;
 import window.*;
 
 import javax.swing.*;
@@ -13,6 +11,7 @@ import java.util.ArrayList;
 public class App {
     public boolean auto_fill = true;
     public DataManager dataManager;
+    public boolean areasChanged = false;
 
     JFrame frame;
     Top top;
@@ -96,30 +95,40 @@ public class App {
         windows.removeIf(w -> w instanceof Scenario);
 
         int windowI = getLastFillFactorWindowIndex();
-        if(windowI == -1)
+        if (windowI == -1)
             return;
+
+        dataManager.clearScenarios();
 
         // optymistyczny
         for (Area area : dataManager.areas) {
-            windows.add(windowI, new Scenario(this, "optymistyczny", area, 1));
+            FirstTwoScenarios scenario = new FirstTwoScenarios(area);
+            dataManager.optimisticScenario.add(scenario);
+            windows.add(windowI, new Scenario(this, "optymistyczny", area, 1, scenario));
             windowI++;
         }
 
         // pesymistyczny
         for (Area area : dataManager.areas) {
-            windows.add(windowI, new Scenario(this, "pesymistyczny", area, 1));
+            FirstTwoScenarios scenario = new FirstTwoScenarios(area);
+            dataManager.pesimisticScenario.add(scenario);
+            windows.add(windowI, new Scenario(this, "pesymistyczny", area, 1, scenario));
             windowI++;
         }
 
         // najbardziej prawdopodobny
         for (Area area : dataManager.areas) {
-            windows.add(windowI, new Scenario(this, "najbardziej prawdopodobny", area, 2));
+            SecondTwoScenarios scenario = new SecondTwoScenarios(area);
+            dataManager.mostLikelyScenario.add(scenario);
+            windows.add(windowI, new Scenario(this, "najbardziej prawdopodobny", area, 2, scenario));
             windowI++;
         }
 
         // niespodziankowy
         for (Area area : dataManager.areas) {
-            windows.add(windowI, new Scenario(this, "niespodziankowy", area, 2));
+            SecondTwoScenarios scenario = new SecondTwoScenarios(area);
+            dataManager.unexpectedScenario.add(scenario);
+            windows.add(windowI, new Scenario(this, "niespodziankowy", area, 2, scenario));
             windowI++;
         }
 
@@ -130,11 +139,9 @@ public class App {
         int index = 0;
         boolean begin = false;
         for (Window w : windows) {
-            if(!begin && w instanceof FillFactor ) {
+            if (!begin && w instanceof FillFactor) {
                 begin = true;
-            }
-            else if(begin && !(w instanceof FillFactor))
-            {
+            } else if (begin && !(w instanceof FillFactor)) {
                 return index;
             }
 
@@ -167,12 +174,14 @@ public class App {
         windowIndex++;
 
         // tworzy ekrany dla czynników po wybraniu sfer
-        if (windowIndex > 0 && windows.get(windowIndex - 1) instanceof ChoosingAreas) {
+        if (areasChanged && windowIndex > 0 && windows.get(windowIndex - 1) instanceof ChoosingAreas) {
             calculateFactorWindows();
             calculateScenariosWindows();
         }
 
         bottom.adjustProgressBar();
         center.displayWindow(windows.get(windowIndex));
+
+        areasChanged = false;
     }
 }
