@@ -16,12 +16,12 @@ public class Welcome extends Window {
         this.add(text);
 
         checkBox = new JCheckBox("Auto scenariusze", true);
-        checkBox.addActionListener(e -> app.auto_scenario = !app.auto_scenario);
+        checkBox.addActionListener(e -> app.auto_fill = !app.auto_fill);
         add(checkBox);
     }
 
     @Override
     public void display() {
-        checkBox.setSelected(app.auto_scenario);
+        checkBox.setSelected(app.auto_fill);
     }
 }

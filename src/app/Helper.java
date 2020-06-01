@@ -35,4 +35,17 @@ public class Helper {
 
         return text;
     }
+
+    public static boolean validateInfluenceValue(String value) {
+        for (String x : Config.influenceValidList) {
+            if(x.equals(value))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static boolean validateProbabilityValue(double value) {
+        return value <= 1.0 && value >= 0;
+    }
 }

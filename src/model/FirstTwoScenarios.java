@@ -1,25 +1,33 @@
 package model;
 
+import layout.AvgGetter;
+
 import java.util.ArrayList;
 
 public class FirstTwoScenarios {
     public Area area;
     public ArrayList<String> infuences;
-    public double average;
+    public String average;
+
+    public AvgGetter getAverage = () -> this.average;
 
     public FirstTwoScenarios(Area area) {
         this.area = area;
         this.infuences = new ArrayList<>();
-
-        this.average = 0.0;
-    }
-
-    public double calculateAvarage() throws NumberFormatException {
-        average = 0.0;
-        for (String x : infuences) {
-           average += Double.parseDouble(x);
+        for (Factor x : this.area.factors) {
+            this.infuences.add(x.getName());
         }
 
-        return average;
+        this.average = "0";
+    }
+
+    public String calculateAvarage(){
+        double avg = 0.0;
+        for (String x : infuences) {
+            try {
+                avg += Double.parseDouble(x);
+            } catch (Exception ignored) { }
+        }
+        return average = String.valueOf(avg);
     }
 }

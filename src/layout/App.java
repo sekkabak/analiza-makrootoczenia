@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class App {
-    public boolean auto_scenario = true;
+    public boolean auto_fill = true;
     public DataManager dataManager;
 
     JFrame frame;

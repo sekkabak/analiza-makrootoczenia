@@ -3,13 +3,19 @@ package window;
 import app.Config;
 import app.Helper;
 import layout.App;
+import layout.AvgGetter;
 import layout.Window;
 import model.Area;
 import model.Factor;
+import model.FirstTwoScenarios;
+import model.SecondTwoScenarios;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Scenario extends Window {
     int scenarioType;
@@ -21,6 +27,11 @@ public class Scenario extends Window {
 
     String name;
     Area area;
+
+    FirstTwoScenarios scenario1;
+    SecondTwoScenarios scenario2;
+
+    Map<AvgGetter, JLabel> labelsToUpdate = new HashMap<>();
 
     public Scenario(App app, String name, Area area, int type) {
         super(app);
@@ -47,10 +58,17 @@ public class Scenario extends Window {
     }
 
     private void createFactors() {
-        if(scenarioType == 1)
+        if (scenarioType == 1) {
             createFactors1();
-        else
+            if(app.auto_fill) {
+                autoFill1();
+            }
+        } else {
             createFactors2();
+            if(app.auto_fill) {
+                autoFill2();
+            }
+        }
     }
 
     private void createFactors1() {
@@ -64,6 +82,8 @@ public class Scenario extends Window {
         center.setBorder(Config.border);
         center.setFont(Config.font);
 
+        scenario1 = new FirstTwoScenarios(area);
+
         center.add(Helper.createLabel("Czynniki"));
         center.add(Helper.createLabel("Siła wpływu"));
 
@@ -73,9 +93,16 @@ public class Scenario extends Window {
         }
 
         center.add(Helper.createLabel("Średnia"));
-        center.add(Helper.createLabel(""));
+        JLabel average = Helper.createLabel(scenario1.average);
+        labelsToUpdate.put(scenario1.getAverage, average);
+
+        center.add(average);
 
         center.repaint();
+    }
+
+    private void autoFill1() {
+
     }
 
     private void createFactors2() {
@@ -110,11 +137,26 @@ public class Scenario extends Window {
         center.repaint();
     }
 
+    private void autoFill2() {
+
+    }
+
+    /**
+     * Odświerza wszystkie sumy / średnie
+     */
+    public void updateLabels() {
+        for (Map.Entry me : labelsToUpdate.entrySet()) {
+            JLabel label = (JLabel) me.getValue();
+            AvgGetter getter = (AvgGetter) me.getKey();
+            label.setText(getter.getAverage());
+        }
+    }
+
     private void createTopPanel() {
         top = new JPanel();
         top.setPreferredSize(new Dimension(100, 100));
         top.setBackground(Config.color2);
-        top.setLayout(new GridLayout(2,2));
+        top.setLayout(new GridLayout(2, 2));
 
         top.add(Helper.createLabel("Scenariusz"));
         top.add(Helper.createLabel(name));

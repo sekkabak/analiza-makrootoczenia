@@ -6,12 +6,16 @@ import java.awt.*;
 
 public class Config {
     public static final String AppName = "Analiza makrootoczenia";
+
+
 //    public static final String AppDescription = "<html>" +
 //            "ładny opis programu" +
 //            "<br/>" +
 //            "<div style='background-color:red'>a to jest nowa linia</div>" +
 //            "<img width='400' src='https://www.zooplus.pl/magazyn/wp-content/uploads/2019/12/kot-przyb%C5%82%C4%99da-768x512.jpeg'></img>" +
 //            "</html>";
+
+
     public static final String AppDescription = "<html>" +
             "ładny opis programu" +
             "<br/>" +
@@ -22,7 +26,8 @@ public class Config {
 
     public static final int frameMarginLeftRight = 25;
 
-    public static final String[] influenceValidList = {"-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5"};
+    public static final String[] influenceValidList = {"-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "+1", "+2", "+3", "+4", "+5"};
+
     public static final String[] factorPartsName = {"Wzrost", "Stabilizacja", "Regres"};
 
     public static final int defaultFactorsCount = 5;
