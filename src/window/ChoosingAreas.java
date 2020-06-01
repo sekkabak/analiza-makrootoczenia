@@ -22,11 +22,15 @@ public class ChoosingAreas extends Window {
     AreasTable disabledAreaTable;
     AreasTable enabledAreaTable = new AreasTable(enabledAreas, this);
 
+    JPanel jPanelForDisabled = new JPanel();
+    JPanel jPanelForEnabled = new JPanel();
+
     JButton buttonForAdd = new JButton("+");
     JTextField textFieldForAddingSpheres = new JTextField();
     ArrayList<String> listToTakeFrom = new ArrayList<>();
 
-
+    JPanel up;
+    JPanel down;
 
     public ChoosingAreas(App app) {
         super(app);
@@ -40,8 +44,42 @@ public class ChoosingAreas extends Window {
         initArea();
         disabledAreaTable = new AreasTable(disabledAreas, this);
 
-        add(disabledAreaTable);
-        add(enabledAreaTable);
+        jPanelForDisabled.setLayout(new GridLayout(0, 1));
+        jPanelForEnabled.setLayout(new GridLayout(0, 1));
+
+        jPanelForDisabled.add(disabledAreaTable);
+        jPanelForEnabled.add(enabledAreaTable);
+
+        up = new JPanel();
+        up.setBackground(Config.color2);
+        down = new JPanel();
+        down.setBackground(Config.color2);
+
+        GridLayout gL = new GridLayout(1,2,10,0);
+        setLayout(new GridLayout(2,1));
+
+        gL.setHgap(20);
+
+        add(up);
+        add(down);
+
+        enabledAreaTable.setBackground(Config.color3);
+        disabledAreaTable.setBackground(Config.color3);
+
+        up.setBorder(new EmptyBorder(10, 10, 10, 10));
+        up.add(jPanelForDisabled);
+        up.add(jPanelForEnabled);
+        up.setLayout(gL);
+
+        buttonForAdd.setPreferredSize(new Dimension(50,50));
+        buttonForAdd.setBackground(Config.color1);
+        buttonForAdd.setForeground(Config.color3);
+        buttonForAdd.setFocusPainted(false);
+
+        textFieldForAddingSpheres.setPreferredSize(new Dimension(300,50));
+        textFieldForAddingSpheres.setBackground(Config.color3);
+        textFieldForAddingSpheres.setForeground(Config.color1);
+        textFieldForAddingSpheres.setFont(Config.font);
 
         buttonForAdd.addActionListener(e -> {
             if(!textFieldForAddingSpheres.getText().equals("")) {
@@ -50,16 +88,19 @@ public class ChoosingAreas extends Window {
             }
             textFieldForAddingSpheres.setText("");
             app.dataManager.areas = enabledAreas;
-            this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+            jPanelForDisabled.remove(disabledAreaTable); 
+            jPanelForEnabled.remove(enabledAreaTable);
             enabledAreaTable = new AreasTable(enabledAreas, this);
             disabledAreaTable = new AreasTable(disabledAreas, this);
-            this.add(disabledAreaTable); this.add(enabledAreaTable);
+            jPanelForDisabled.add(disabledAreaTable); 
+            jPanelForEnabled.add(enabledAreaTable);
+            app.areasChanged = true;
             this.validate();
         });
 
-        add(buttonForAdd);
-        add(textFieldForAddingSpheres);
-        
+        down.setBorder(new EmptyBorder(10, 10, 10, 10));
+        down.add(buttonForAdd);
+        down.add(textFieldForAddingSpheres);
     }
 
     public void change(String s) {
@@ -101,10 +142,14 @@ public class ChoosingAreas extends Window {
             enabledAreas.remove(PositionInEnabledTable);
         }
         app.dataManager.areas = enabledAreas;
-        this.remove(enabledAreaTable); this.remove(disabledAreaTable);
+        jPanelForDisabled.remove(disabledAreaTable); 
+        jPanelForEnabled.remove(enabledAreaTable);
         enabledAreaTable = new AreasTable(enabledAreas, this);
         disabledAreaTable = new AreasTable(disabledAreas, this);
-        this.add(disabledAreaTable); this.add(enabledAreaTable);
+        jPanelForDisabled.add(disabledAreaTable); 
+        jPanelForEnabled.add(enabledAreaTable);
+        app.areasChanged = true;
+
         this.validate();
     }
 

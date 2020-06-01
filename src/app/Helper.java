@@ -1,6 +1,9 @@
 package app;
 
+import layout.AvgGetter;
+import layout.AvgRefresh;
 import layout.BindedTextField;
+import layout.BindedTextFieldList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,5 +37,25 @@ public class Helper {
         text.getDocument().addDocumentListener(new BindedTextField(model, fieldName));
 
         return text;
+    }
+
+    public static JTextField createBindedFieldList(String value, Object model, String fieldName, int index, AvgRefresh refresh) {
+        JTextField text = Helper.createField(value);
+        text.getDocument().addDocumentListener(new BindedTextFieldList(model, fieldName, index, refresh));
+
+        return text;
+    }
+
+    public static boolean validateInfluenceValue(String value) {
+        for (String x : Config.influenceValidList) {
+            if(x.equals(value))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static boolean validateProbabilityValue(double value) {
+        return value <= 1.0 && value >= 0;
     }
 }

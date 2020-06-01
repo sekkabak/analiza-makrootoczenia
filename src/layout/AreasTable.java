@@ -22,11 +22,10 @@ public class AreasTable extends JPanel {
         table.setRowHeight(50);
         table.setFont(Config.font);
         table.setTableHeader(null);
+        table.setBackground(Config.color3);
 
         CustomTableModel model = (CustomTableModel) table.getModel();
         model.addColumn("Areas");
-
-
 
         for (Area x : areas) {
             model.addRow(new Object[]{x.name});
@@ -34,13 +33,13 @@ public class AreasTable extends JPanel {
 
         table.getSelectionModel().addListSelectionListener(event -> {
             if (!event.getValueIsAdjusting()) {
-                System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-                // przerzucenie do czegoś
                 this.window.change(table.getValueAt(table.getSelectedRow(), 0).toString());
             }
         });
 
         JScrollPane tableContainer = new JScrollPane(table);
+        tableContainer.getViewport().setBackground(Config.color3);
         this.add(tableContainer, BorderLayout.CENTER);
     }
+    
 }

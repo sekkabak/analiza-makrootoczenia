@@ -1,20 +1,17 @@
 package layout;
 
 import app.Config;
-import model.Area;
-import model.DataManager;
-import model.Factor;
-import window.FillFactor;
-import window.ChoosingAreas;
-import window.Scenario;
-import window.Welcome;
+import model.*;
+import window.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class App {
+    public boolean auto_fill = true;
     public DataManager dataManager;
+    public boolean areasChanged = false;
 
     JFrame frame;
     Top top;
@@ -42,7 +39,6 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(Config.initialState);
         frame.setMinimumSize(Config.initialState);
-//        frame.setResizable(false);
 
         BorderLayout borderLayout = new BorderLayout();
         top = new Top(this);
@@ -78,8 +74,7 @@ public class App {
 
         windows.add(new ChoosingAreas(this));
 
-        windows.add(new Scenario(this, "TEST"));
-        windows.add(new Welcome(this));
+        windows.add(new Output(this));
 
         progressMax = windows.size() - 1;
     }
@@ -99,14 +94,61 @@ public class App {
     private void calculateScenariosWindows() {
         windows.removeIf(w -> w instanceof Scenario);
 
-        int windowI = windowIndex;
+        int windowI = getLastFillFactorWindowIndex();
+        if (windowI == -1)
+            return;
+
+        dataManager.clearScenarios();
+
+        // optymistyczny
         for (Area area : dataManager.areas) {
-            for (int i = 0; i < area.factors.size(); i++, windowI++) {
-                windows.add(windowI, new FillFactor(this, area, area.factors.get(i)));
-            }
+            FirstTwoScenarios scenario = new FirstTwoScenarios(area);
+            dataManager.optimisticScenario.add(scenario);
+            windows.add(windowI, new Scenario(this, "optymistyczny", area, 1, scenario));
+            windowI++;
+        }
+
+        // pesymistyczny
+        for (Area area : dataManager.areas) {
+            FirstTwoScenarios scenario = new FirstTwoScenarios(area);
+            dataManager.pesimisticScenario.add(scenario);
+            windows.add(windowI, new Scenario(this, "pesymistyczny", area, 1, scenario));
+            windowI++;
+        }
+
+        // najbardziej prawdopodobny
+        for (Area area : dataManager.areas) {
+            SecondTwoScenarios scenario = new SecondTwoScenarios(area);
+            dataManager.mostLikelyScenario.add(scenario);
+            windows.add(windowI, new Scenario(this, "najbardziej prawdopodobny", area, 2, scenario));
+            windowI++;
+        }
+
+        // niespodziankowy
+        for (Area area : dataManager.areas) {
+            SecondTwoScenarios scenario = new SecondTwoScenarios(area);
+            dataManager.unexpectedScenario.add(scenario);
+            windows.add(windowI, new Scenario(this, "niespodziankowy", area, 2, scenario));
+            windowI++;
         }
 
         progressMax = windows.size() - 1;
+    }
+
+    private int getLastFillFactorWindowIndex() {
+        int index = 0;
+        boolean begin = false;
+        for (Window w : windows) {
+            if (!begin && w instanceof FillFactor) {
+                begin = true;
+            } else if (begin && !(w instanceof FillFactor)) {
+                return index;
+            }
+
+            index++;
+        }
+
+        return -1;
     }
 
     public void addFactorPage() {
@@ -132,10 +174,14 @@ public class App {
         windowIndex++;
 
         // tworzy ekrany dla czynników po wybraniu sfer
-        if (windowIndex > 0 && windows.get(windowIndex - 1) instanceof ChoosingAreas)
+        if (areasChanged && windowIndex > 0 && windows.get(windowIndex - 1) instanceof ChoosingAreas) {
             calculateFactorWindows();
+            calculateScenariosWindows();
+        }
 
         bottom.adjustProgressBar();
         center.displayWindow(windows.get(windowIndex));
+
+        areasChanged = false;
     }
 }
