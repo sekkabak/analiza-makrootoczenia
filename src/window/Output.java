@@ -61,9 +61,8 @@ public class Output extends Window {
         r.html.add("<br><br>");
 
 
-        // TODO
 
-        // Analiza tendencji w makrootoczeniu
+        // Scenariusz optymstyczny
         r.html.add("<h2>Tabela 2. Scenariusz optymistyczny</h2>");
         Table t2 = new Table();
         t2.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Siła wpływu")));
@@ -76,6 +75,54 @@ public class Output extends Window {
         }
         r.html.add(t2.getContent());
         r.save();
+        r.html.add("<br><br>");
+
+
+        //TODO
+        // Scenariusz pesymistyczny
+        r.html.add("<h2>Tabela 3. Scenariusz pesymistyczny</h2>");
+        Table t3 = new Table();
+        t3.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Siła wpływu")));
+        for (Area a : app.dataManager.areas) {
+            t3.addHeader(a.name, 2);
+            for (Factor f : a.factors) {
+                t3.addRow(new ArrayList<>(Arrays.asList(f.getName(), "")));
+            }
+            t3.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "")));
+        }
+        r.html.add(t3.getContent());
+        r.save();
+
+        //TODO
+        // Scenariusz pesymistyczny
+        r.html.add("<h2>Tabela 4. Scenariusz najbardziej prawdopodobny</h2>");
+        Table t4 = new Table();
+        t4.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Prawdopodobieństwo", "Siła wpływu 'ujemna'", "Siła wpływu 'dodatnia'")));
+        for (Area a : app.dataManager.areas) {
+            t4.addHeader(a.name, 4);
+            for (Factor f : a.factors) {
+                t4.addRow(new ArrayList<>(Arrays.asList(f.getName(), "", "", "")));
+            }
+            t4.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "", "", "")));
+        }
+        r.html.add(t4.getContent());
+        r.save();
+
+        //TODO
+        // Scenariusz pesymistyczny
+        r.html.add("<h2>Tabela 5. Scenariusz niespodziankowy</h2>");
+        Table t5 = new Table();
+        t5.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Prawdopodobieństwo", "Siła wpływu 'ujemna'", "Siła wpływu 'dodatnia'")));
+        for (Area a : app.dataManager.areas) {
+            t5.addHeader(a.name, 4);
+            for (Factor f : a.factors) {
+                t5.addRow(new ArrayList<>(Arrays.asList(f.getName(), "", "", "")));
+            }
+            t5.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "", "", "")));
+        }
+        r.html.add(t5.getContent());
+        r.save();
+
 
         //first check if Desktop is supported by Platform or not
         if(!Desktop.isDesktopSupported()){
