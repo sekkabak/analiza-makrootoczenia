@@ -74,6 +74,8 @@ public class App {
 
         windows.add(new ChoosingAreas(this));
 
+        windows.add(new Plot(this));
+
         windows.add(new Output(this));
 
         progressMax = windows.size() - 1;
