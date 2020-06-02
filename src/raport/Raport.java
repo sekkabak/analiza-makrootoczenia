@@ -1,5 +1,8 @@
 package raport;
 
+import app.Helper;
+import model.Area;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +19,7 @@ public class Raport {
     private final String style = "body{margin:0 20% 0 20%}table.pz-table{font-family:arial,sans-serif;border-collapse:collapse;width:100%}.pz-table td,.pz-table th{border:1px solid #000;text-align:left;padding:8px}.pz-table td.span,.pz-table th{background-color:#ddd}table.legend{border:1px solid #000}.legend td{min-width:50px}hr.dashed{border:none;border-top:2px dotted #000;color:#fff;background-color:#fff;height:1px;width:50%}hr.big{border:none;border-top:2px solid #000;color:#fff;background-color:#fff;height:1px;width:50%}";
     public ArrayList<String> html = new ArrayList<>();
 
-    private String getPlotImage() {
+    public String getPlotImage() {
         return "<img src='./" + plotPath + "' alt='wykres'></img>";
     }
 
@@ -28,10 +31,6 @@ public class Raport {
             body.append(s);
         }
 
-        body.append(getLegend());
-        body.append("<h2>Wykres:</h2>");
-        body.append(getPlotImage());
-        body.append("<br><br>");
         body.append("</body>");
         return body.toString();
     }
@@ -66,8 +65,23 @@ public class Raport {
         }
     }
 
-    private String getLegend() {
-        return "<br><br><table class=\"legend\"> <tr> <td colspan=\"2\"> <h3>Legenda</h3> </td></tr><tr> <td> <hr class=\"big\"> </td><td>- scenariusz optymistyczny</td></tr><tr> <td> <hr class=\"dashed\"> </td><td>- scenariusz pesymistyczny</td></tr><tr> <td style=\"background-color: rgba(50, 168, 82, 0.5);\">&nbsp;&nbsp;&nbsp;&nbsp;</td><td>- scenariusz niespodziankowy</td></tr><tr> <td style=\"background-color: rgba(119,51,68, 0.5);\">&nbsp;&nbsp;&nbsp;&nbsp;</td><td>- scenariusz najbardziej prawdopodobny</td></tr></table>";
+    public String getLegend(ArrayList<Area> areas) {
+        StringBuilder legend = new StringBuilder();
+        legend.append("<br><br><table class=\"legend\"> <tr> <td colspan=\"2\"> <h3>Legenda</h3> </td></tr><tr> <td> <hr class=\"big\"> </td><td>- scenariusz optymistyczny</td></tr><tr> <td> <hr class=\"dashed\"> </td><td>- scenariusz pesymistyczny</td></tr><tr> <td style=\"background-color: rgba(50, 168, 82, 0.5);\">&nbsp;&nbsp;&nbsp;&nbsp;</td><td>- scenariusz niespodziankowy</td></tr><tr> <td style=\"background-color: rgba(119,51,68, 0.5);\">&nbsp;&nbsp;&nbsp;&nbsp;</td><td>- scenariusz najbardziej prawdopodobny</td></tr>");
+
+        for (int i = 0; i < areas.size(); i++) {
+            legend.append("<tr>");
+            legend.append("<td>");
+            legend.append(Helper.toRoman(i+1));
+            legend.append("</td>");
+            legend.append("<td>");
+            legend.append(areas.get(i).name);
+            legend.append("</td>");
+            legend.append("<tr>");
+        }
+
+        legend.append("</table>");
+        return legend.toString();
     }
 
     public static void savePlotToImage(JPanel panel) {

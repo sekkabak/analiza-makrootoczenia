@@ -2,12 +2,14 @@ package window;
 
 import app.Config;
 import layout.App;
+import layout.BindedTextField;
 import layout.Window;
 import model.*;
 import raport.Raport;
 import raport.Table;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -19,11 +21,16 @@ public class Output extends Window {
     public Output(App app) {
         super(app);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        JLabel text = new JLabel("KONIEC", SwingConstants.CENTER);
-        text.setFont(Config.font);
-        text.setForeground(Config.color1);
-        text.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel label = new JLabel("Wnioski:", SwingConstants.CENTER);
+        label.setFont(Config.font);
+        label.setForeground(Config.color1);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(label);
+
+        JTextArea text = new JTextArea();
+        text.getDocument().addDocumentListener(new BindedTextField(app.dataManager, "conclusions"));
         add(text);
 
         JButton b = new JButton("Generuj i otwórz raport");
@@ -35,6 +42,9 @@ public class Output extends Window {
     private void generatePdf() {
         Raport r = new Raport();
         r.html.add("<br><br>");
+
+        r.html.add("<p><label>Wykonał(a): " + app.dataManager.creator + "</label></p>");
+        r.html.add("<p><label>Data: " + app.dataManager.date + "</label></p>");
 
         // Analiza tendencji w makrootoczeniu
         r.html.add("<h2>Tabela 1. Analiza tendencji w makrootoczeniu</h2>");
@@ -139,6 +149,17 @@ public class Output extends Window {
             t5.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "", scenario.negativeInfuenceAverage, scenario.positiveInfuenceAverage)));
         }
         r.html.add(t5.getContent());
+
+
+        r.html.add(r.getLegend(app.dataManager.areas));
+        r.html.add("<h2>Wykres:</h2>");
+        r.html.add(r.getPlotImage());
+        r.html.add("<br><br>");
+
+        r.html.add("<h2>Wnioski:</h2>");
+        r.html.add("<div>" + app.dataManager.conclusions + "</div>");
+        r.html.add("<br><br>");
+
         r.save();
 
 

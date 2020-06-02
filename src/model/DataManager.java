@@ -11,6 +11,10 @@ public class DataManager {
     public ArrayList<SecondTwoScenarios> mostLikelyScenario;
     public ArrayList<SecondTwoScenarios> unexpectedScenario;
 
+    public String creator;
+    public String date;
+    public String conclusions;
+
     public DataManager() {
         this.areas = new ArrayList<>();
 
@@ -18,6 +22,10 @@ public class DataManager {
         pesimisticScenario = new ArrayList<>();
         mostLikelyScenario = new ArrayList<>();
         unexpectedScenario = new ArrayList<>();
+
+        conclusions = "";
+        creator = "";
+        date = "";
     }
 
     public void setCurrentArea(Area area) {
@@ -36,5 +44,17 @@ public class DataManager {
         pesimisticScenario.clear();
         mostLikelyScenario.clear();
         unexpectedScenario.clear();
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setConclusions(String conclusions) {
+        this.conclusions = conclusions;
     }
 }
