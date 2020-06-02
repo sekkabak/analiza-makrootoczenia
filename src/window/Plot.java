@@ -1,6 +1,7 @@
 package window;
 
 import app.Config;
+import app.Helper;
 import layout.App;
 import layout.Window;
 import model.FirstTwoScenarios;
@@ -9,6 +10,7 @@ import model.SecondTwoScenarios;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class Plot extends Window {
 
@@ -56,6 +58,8 @@ public class Plot extends Window {
         int counter = 1;
         while(counter < spheresCounter+1) {
             int var = getHeight() - counter * (getHeight())/(spheresCounter+1) - 20;
+            int space = (getHeight() - (getHeight())/(spheresCounter+1) - 20) - (getHeight() - 2* (getHeight())/(spheresCounter+1) - 20);
+            System.out.println(space);
             tableOfPlaces.add(var);
             g.setColor(Color.black);
             g.drawLine(40, var, getWidth() - 40,  var);
@@ -64,6 +68,9 @@ public class Plot extends Window {
                     getWidth()/100, getHeight()/100);
             drawArrowLine(g, getWidth() - 40 - 3, var , getWidth() - 40 + 3, var,
                     getWidth()/100, getHeight()/100);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+            g2d.drawString(Helper.toRoman(counter), 70, var + space/2 + 10);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
             counter++;
         }
         //vertical
