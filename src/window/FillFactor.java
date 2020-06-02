@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class FillFactor extends Window {
     Area area;
@@ -72,16 +73,33 @@ public class FillFactor extends Window {
 
     private void createCenterPanel() {
         center = new JPanel();
-        center.setLayout(new GridLayout(3, 3, 2, 2));
+        center.setLayout(new GridLayout(4, 3, 2, 2));
         center.setBackground(Config.color2);
+
+        center.add(Helper.createLabel("Trend"));
+        center.add(Helper.createLabel("Siła wpływu od -5 do +5"));
+        center.add(Helper.createLabel("Prawdopodobieństwo (0-1)"));
 
         for (int i = 0; i < 3; i++) {
             center.add(Helper.createLabel(Config.factorPartsName[i]));
+
+            // losuje wpływy
+            if(Config.DEBUG)
+            {
+                factor.rows.get(i).setInfluence(Config.influenceValidList[ThreadLocalRandom.current().nextInt(0, 11)]);
+            }
 
             // wpływ
             JTextField influence = Helper.createBindedField(factor.rows.get(i).getInfluence(), factor.rows.get(i), "influence");
             influenceTextFields.add(influence);
             center.add(influence);
+
+            // losuje prawdopodobnieństwa
+            if(Config.DEBUG)
+            {
+                factor.rows.get(i).setProbability(String.valueOf(ThreadLocalRandom.current().nextInt(0, 10)/10.0));
+            }
+
 
             // prawdopodobieństwo
             JTextField probability = Helper.createBindedField(factor.rows.get(i).getProbability(), factor.rows.get(i), "probability");

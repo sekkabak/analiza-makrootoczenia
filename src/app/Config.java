@@ -7,6 +7,7 @@ import java.awt.*;
 public class Config {
     public static final String AppName = "Analiza makrootoczenia";
 
+    public static final boolean DEBUG = true;
 
 //    public static final String AppDescription = "<html>" +
 //            "ładny opis programu" +
@@ -26,7 +27,7 @@ public class Config {
 
     public static final int frameMarginLeftRight = 25;
 
-    public static final String[] influenceValidList = {"-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "+1", "+2", "+3", "+4", "+5"};
+    public static final String[] influenceValidList = {"-5", "-4", "-3", "-2", "-1", "0", "+1", "+2", "+3", "+4", "+5"};
 
     public static final String[] factorPartsName = {"Wzrost", "Stabilizacja", "Regres"};
 
@@ -47,5 +48,9 @@ public class Config {
     public static final Color color3 = new Color(245,233,226);
     public static final Color color4 = new Color(11,0,20);
     public static final Color color5 = new Color(212,77,92);
+
+    public static final Color plotColor1 = new Color(50, 168, 82, 50);
+    public static final Color plotColor2 = new Color(119,51,68, 50);
+
     public static final Border border = BorderFactory.createLineBorder(color1, 3);
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Raport {
     public final String filePath = "raport.html";
-    private final String plotPath = "wykres.png";
+    public static final String plotPath = "wykres.png";
 
     private final String style = "body{margin:0 20% 0 20%}table{font-family:arial,sans-serif;border-collapse:collapse;width:100%}td,th{border:1px solid #000;text-align:left;padding:8px}td.span,th{background-color:#ddd}";
     public ArrayList<String> html = new ArrayList<>();
@@ -28,7 +28,9 @@ public class Raport {
             body.append(s);
         }
 
+        body.append("<h2>Wykres:</h2>");
         body.append(getPlotImage());
+        body.append("<br><br>");
         body.append("</body>");
         return body.toString();
     }
@@ -63,12 +65,12 @@ public class Raport {
         }
     }
 
-    public void loadImage(JPanel panel) {
+    public static void savePlotToImage(JPanel panel) {
         BufferedImage image = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
         panel.paint(g2);
         try {
-            ImageIO.write(image, "png", new File(plotPath));
+            ImageIO.write(image, "png", new File(Raport.plotPath));
         } catch (Exception e) {
             e.printStackTrace();
         }

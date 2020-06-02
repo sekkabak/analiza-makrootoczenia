@@ -1,6 +1,5 @@
 package app;
 
-import layout.AvgGetter;
 import layout.AvgRefresh;
 import layout.BindedTextField;
 import layout.BindedTextFieldList;
@@ -46,16 +45,27 @@ public class Helper {
         return text;
     }
 
-    public static boolean validateInfluenceValue(String value) {
-        for (String x : Config.influenceValidList) {
-            if(x.equals(value))
-                return true;
+    public static String getValidAverageForm(double avg) {
+        String res = String.valueOf(avg);
+
+        // dodanie + jeśli jest dodatnia
+        if(res.charAt(0) != '-' && res.charAt(0) != '+' && avg != 0.0) {
+            res = "+" + res;
         }
 
-        return false;
-    }
+        // wyliczenie miejsca kroki i dodanie 3 znaków
+        int i = 0;
+        for (i = 0; i < res.length(); i++) {
+            if(res.charAt(i) == '.') {
+                i += 3;
+                break;
+            }
+        }
 
-    public static boolean validateProbabilityValue(double value) {
-        return value <= 1.0 && value >= 0;
+        // obcięcie reszty znaków po 2 po kropce
+        if(i < res.length())
+            res = res.substring(0, i);
+
+        return res;
     }
 }

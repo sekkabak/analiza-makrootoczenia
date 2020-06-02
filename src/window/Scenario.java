@@ -167,9 +167,7 @@ public class Scenario extends Window {
         }
 
         center.add(Helper.createLabel("Średnia"));
-        JLabel probabilityAverage = Helper.createLabel(scenario2.probabilityAverage);
-        labelsToUpdate.put(scenario2.getProbabilityAverage, probabilityAverage);
-        center.add(probabilityAverage);
+        center.add(Helper.createLabel(""));
 
         JLabel negativeInfuenceAverage = Helper.createLabel(scenario2.negativeInfuenceAverage);
         labelsToUpdate.put(scenario2.getNegativeInfuenceAverage, negativeInfuenceAverage);
@@ -226,7 +224,7 @@ public class Scenario extends Window {
                 scenario2.positiveInfuences.set(i, res1);
             }
 
-            scenario2.calculateProbabilityAverage();
+//            scenario2.calculateProbabilityAverage();
             scenario2.calculateNegativeInfuenceAverage();
             scenario2.calculatePositiveInfuenceAverage();
         }

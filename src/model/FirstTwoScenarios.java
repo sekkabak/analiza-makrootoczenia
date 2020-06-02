@@ -1,5 +1,6 @@
 package model;
 
+import app.Helper;
 import layout.AvgGetter;
 
 import java.util.ArrayList;
@@ -35,6 +36,6 @@ public class FirstTwoScenarios {
             }
         }
         avg /= infuences.size();
-        return average = String.valueOf(avg);
+        return average = Helper.getValidAverageForm(avg);
     }
 }

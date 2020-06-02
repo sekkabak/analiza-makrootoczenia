@@ -2,6 +2,7 @@ package layout;
 
 import app.Config;
 import model.*;
+import raport.Raport;
 import window.*;
 
 import javax.swing.*;
@@ -179,6 +180,8 @@ public class App {
         if (areasChanged && windowIndex > 0 && windows.get(windowIndex - 1) instanceof ChoosingAreas) {
             calculateFactorWindows();
             calculateScenariosWindows();
+        } else if(windowIndex > 0 && windows.get(windowIndex - 1) instanceof Plot) {
+            Raport.savePlotToImage(windows.get(windowIndex - 1));
         }
 
         bottom.adjustProgressBar();

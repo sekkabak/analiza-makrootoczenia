@@ -56,7 +56,6 @@ public class Output extends Window {
             }
         }
         r.html.add(t1.getContent());
-        r.html.add("<br><br>");
 
 
         // Scenariusz optymstyczny
@@ -80,12 +79,7 @@ public class Output extends Window {
             t2.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", scenario.average)));
         }
         r.html.add(t2.getContent());
-        r.save();
-        r.html.add("<br><br>");
 
-
-        //TODO
-        // Scenariusz pesymistyczny
         r.html.add("<h2>Tabela 3. Scenariusz pesymistyczny</h2>");
         Table t3 = new Table();
         t3.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Siła wpływu")));
@@ -105,11 +99,7 @@ public class Output extends Window {
             t3.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", scenario.calculateAvarage())));
         }
         r.html.add(t3.getContent());
-        r.save();
-        r.html.add("<br><br>");
 
-        //TODO
-        // Scenariusz pesymistyczny
         r.html.add("<h2>Tabela 4. Scenariusz najbardziej prawdopodobny</h2>");
         Table t4 = new Table();
         t4.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Prawdopodobieństwo", "Siła wpływu 'ujemna'", "Siła wpływu 'dodatnia'")));
@@ -129,10 +119,7 @@ public class Output extends Window {
             t4.addHeader(new ArrayList<>(Arrays.asList("Średnia siła wpływu", "", scenario.negativeInfuenceAverage, scenario.positiveInfuenceAverage)));
         }
         r.html.add(t4.getContent());
-        r.save();
 
-        //TODO
-        // Scenariusz pesymistyczny
         r.html.add("<h2>Tabela 5. Scenariusz niespodziankowy</h2>");
         Table t5 = new Table();
         t5.addHeader(new ArrayList<>(Arrays.asList("Elementy scenariusza", "Prawdopodobieństwo", "Siła wpływu 'ujemna'", "Siła wpływu 'dodatnia'")));

@@ -1,6 +1,8 @@
-package layout;
+package window;
 
 import app.Config;
+import layout.App;
+import layout.Window;
 import model.FirstTwoScenarios;
 import model.SecondTwoScenarios;
 
@@ -18,8 +20,6 @@ public class Plot extends Window {
     public ArrayList<Integer> tableOfPlaces = new ArrayList<>();
     int spheresCounter;
     int space;
-
-
 
     public Plot(App app){
         super(app);
@@ -149,7 +149,7 @@ public class Plot extends Window {
     public void drawRectangleMostLikely(Graphics g){
         int topDotx = 0;
         int bottomDotx = 0;
-        Color c = new Color(128, 128, 128, 30);
+        Color c = Config.plotColor2;
         for(int i = 0; i < spheresCounter; i++){
             Graphics2D g2d = (Graphics2D) g.create();
             topDotx = tableOfPlaces.get(i);
@@ -166,7 +166,7 @@ public class Plot extends Window {
     public void drawRectangleSurprise(Graphics g){
         int topDotx = 0;
         int bottomDotx = 0;
-        Color c = new Color(227,181,164, 30);
+        Color c = Config.plotColor1;
         for(int i = 0; i < spheresCounter; i++){
             Graphics2D g2d = (Graphics2D) g.create();
             topDotx = tableOfPlaces.get(i);

@@ -1,5 +1,6 @@
 package model;
 
+import app.Helper;
 import layout.AvgGetter;
 
 import java.util.ArrayList;
@@ -11,11 +12,11 @@ public class SecondTwoScenarios {
     public ArrayList<String> negativeInfuences;
     public ArrayList<String> positiveInfuences;
 
-    public String probabilityAverage = "0.0";
+//    public String probabilityAverage = "0.0";
     public String negativeInfuenceAverage = "0.0";
     public String positiveInfuenceAverage = "0.0";
 
-    public AvgGetter getProbabilityAverage = this::calculateProbabilityAverage;
+//    public AvgGetter getProbabilityAverage = this::calculateProbabilityAverage;
     public AvgGetter getNegativeInfuenceAverage = this::calculateNegativeInfuenceAverage;
     public AvgGetter getPositiveInfuenceAverage = this::calculatePositiveInfuenceAverage;
 
@@ -50,40 +51,51 @@ public class SecondTwoScenarios {
         this.positiveInfuences.set(pair.integer, pair.string);
     }
 
-
-    public String calculateProbabilityAverage() throws NumberFormatException {
-        double avg = 0.0;
-        for (String x : probability) {
-            try {
-                avg += Double.parseDouble(x);
-            } catch (Exception ignored) {
-            }
-        }
-        avg /= probability.size();
-        return probabilityAverage = String.valueOf(avg);
-    }
+//    public String calculateProbabilityAverage() throws NumberFormatException {
+//        double avg = 0.0;
+//        for (String x : probability) {
+//            try {
+//                avg += Double.parseDouble(x);
+//            } catch (Exception ignored) {
+//            }
+//        }
+//        avg /= probability.size();
+//        return probabilityAverage = String.valueOf(avg);
+//    }
 
     public String calculateNegativeInfuenceAverage() throws NumberFormatException {
         double avg = 0.0;
+        int count = 0;
         for (String x : negativeInfuences) {
             try {
                 avg += Double.parseDouble(x);
+                count++;
             } catch (Exception ignored) {
             }
         }
-        avg /= negativeInfuences.size();
-        return negativeInfuenceAverage = String.valueOf(avg);
+        if(count == 0) {
+            avg = 0.0;
+        } else {
+            avg /= count;
+        }
+        return negativeInfuenceAverage = Helper.getValidAverageForm(avg);
     }
 
     public String calculatePositiveInfuenceAverage() throws NumberFormatException {
         double avg = 0.0;
+        int count = 0;
         for (String x : positiveInfuences) {
             try {
                 avg += Double.parseDouble(x);
+                count++;
             } catch (Exception ignored) {
             }
         }
-        avg /= positiveInfuences.size();
-        return positiveInfuenceAverage = String.valueOf(avg);
+        if(count == 0) {
+            avg = 0.0;
+        } else {
+            avg /= count;
+        }
+        return positiveInfuenceAverage = Helper.getValidAverageForm(avg);
     }
 }
