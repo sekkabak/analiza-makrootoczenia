@@ -217,7 +217,12 @@ public class Scenario extends Window {
                 }
             }
 
+
+
             scenario2.probability.set(i, res);
+            if(res1.equals("0"))
+                continue;
+
             if(isNegative) {
                 scenario2.negativeInfuences.set(i, res1);
             } else {

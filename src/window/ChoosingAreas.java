@@ -35,11 +35,8 @@ public class ChoosingAreas extends Window {
     public ChoosingAreas(App app) {
         super(app);
         setBackground(Config.color2);
-        // TODO trzeba to zrobić chociaż trochę responsywnie
         setBorder(new EmptyBorder(10, 0, 10, 0));
         setLayout(new GridLayout());
-
-        //TODO rzeczy do ustawienia: disabledAreas, enabledAreas, buttonForAdd, textFieldForAddingSpheres
 
         initArea();
         disabledAreaTable = new AreasTable(disabledAreas, this);
@@ -104,7 +101,6 @@ public class ChoosingAreas extends Window {
     }
 
     public void change(String s) {
-        // TODO
         boolean ifInEnabledTable = false;
         int PositionInEnabledTable = 0;
         boolean ifInDisabledTable = false;
