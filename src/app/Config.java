@@ -9,14 +9,6 @@ public class Config {
 
     public static final boolean DEBUG = false;
 
-//    public static final String AppDescription = "<html>" +
-//            "ładny opis programu" +
-//            "<br/>" +
-//            "<div style='background-color:red'>a to jest nowa linia</div>" +
-//            "<img width='400' src='https://www.zooplus.pl/magazyn/wp-content/uploads/2019/12/kot-przyb%C5%82%C4%99da-768x512.jpeg'></img>" +
-//            "</html>";
-
-
     public static final String AppDescription = "<html><body>" +
             "1.  Dokonaj identyfikacji otoczenia analizowanego przedsiębiorstwa:" + "<br/>" +
             "Określ sfery makrootoczenia, zidentyfikuj czynniki, które mają najsilniejszy wpływ na przedsiębiorstwo " +

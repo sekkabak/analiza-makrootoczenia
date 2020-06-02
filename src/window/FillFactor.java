@@ -86,7 +86,12 @@ public class FillFactor extends Window {
             // losuje wpływy
             if(Config.DEBUG)
             {
-                factor.rows.get(i).setInfluence(Config.influenceValidList[ThreadLocalRandom.current().nextInt(0, 11)]);
+                // biorę tylko dobre dane
+                String inf = Config.influenceValidList[ThreadLocalRandom.current().nextInt(0, 11)];
+                while(inf.equals("0"))
+                    inf = Config.influenceValidList[ThreadLocalRandom.current().nextInt(0, 11)];
+
+                factor.rows.get(i).setInfluence(inf);
             }
 
             // wpływ
@@ -97,7 +102,11 @@ public class FillFactor extends Window {
             // losuje prawdopodobnieństwa
             if(Config.DEBUG)
             {
-                factor.rows.get(i).setProbability(String.valueOf(ThreadLocalRandom.current().nextInt(0, 10)/10.0));
+                String prob = String.valueOf(ThreadLocalRandom.current().nextInt(0, 10)/10.0);
+                while (prob.equals("0.0"))
+                    prob = String.valueOf(ThreadLocalRandom.current().nextInt(0, 10)/10.0);
+
+                factor.rows.get(i).setProbability(prob);
             }
 
 
