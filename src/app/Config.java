@@ -7,7 +7,7 @@ import java.awt.*;
 public class Config {
     public static final String AppName = "Analiza makrootoczenia";
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
 //    public static final String AppDescription = "<html>" +
 //            "ładny opis programu" +
@@ -31,7 +31,7 @@ public class Config {
 
     public static final String[] factorPartsName = {"Wzrost", "Stabilizacja", "Regres"};
 
-    public static final int defaultFactorsCount = 5;
+    public static final int defaultFactorsCount = 4;
 
     public static final String[] initialAreas = {
             "Polityczna",
