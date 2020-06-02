@@ -6,7 +6,7 @@ public class Table {
     StringBuilder html = new StringBuilder();
 
     public String getContent() {
-        return "<table>" +
+        return "<table class='pz-table'>" +
                 html.toString() +
                 "</table>";
     }

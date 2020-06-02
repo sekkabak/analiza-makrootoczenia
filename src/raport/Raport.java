@@ -13,7 +13,7 @@ public class Raport {
     public final String filePath = "raport.html";
     public static final String plotPath = "wykres.png";
 
-    private final String style = "body{margin:0 20% 0 20%}table{font-family:arial,sans-serif;border-collapse:collapse;width:100%}td,th{border:1px solid #000;text-align:left;padding:8px}td.span,th{background-color:#ddd}";
+    private final String style = "body{margin:0 20% 0 20%}table.pz-table{font-family:arial,sans-serif;border-collapse:collapse;width:100%}.pz-table td,.pz-table th{border:1px solid #000;text-align:left;padding:8px}.pz-table td.span,.pz-table th{background-color:#ddd}table.legend{border:1px solid #000}.legend td{min-width:50px}hr.dashed{border:none;border-top:2px dotted #000;color:#fff;background-color:#fff;height:1px;width:50%}hr.big{border:none;border-top:2px solid #000;color:#fff;background-color:#fff;height:1px;width:50%}";
     public ArrayList<String> html = new ArrayList<>();
 
     private String getPlotImage() {
@@ -28,6 +28,7 @@ public class Raport {
             body.append(s);
         }
 
+        body.append(getLegend());
         body.append("<h2>Wykres:</h2>");
         body.append(getPlotImage());
         body.append("<br><br>");
@@ -63,6 +64,10 @@ public class Raport {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    private String getLegend() {
+        return "<br><br><table class=\"legend\"> <tr> <td colspan=\"2\"> <h3>Legenda</h3> </td></tr><tr> <td> <hr class=\"big\"> </td><td>- scenariusz optymistyczny</td></tr><tr> <td> <hr class=\"dashed\"> </td><td>- scenariusz pesymistyczny</td></tr><tr> <td style=\"background-color: rgba(50, 168, 82, 0.5);\">&nbsp;&nbsp;&nbsp;&nbsp;</td><td>- scenariusz niespodziankowy</td></tr><tr> <td style=\"background-color: rgba(119,51,68, 0.5);\">&nbsp;&nbsp;&nbsp;&nbsp;</td><td>- scenariusz najbardziej prawdopodobny</td></tr></table>";
     }
 
     public static void savePlotToImage(JPanel panel) {
