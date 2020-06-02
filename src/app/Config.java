@@ -19,7 +19,7 @@ public class Config {
 
     public static final String AppDescription = "<html><body>" +
             "1.  Dokonaj identyfikacji otoczenia analizowanego przedsiębiorstwa:" + "<br/>" +
-            "Określ sfery makrootoczenia, zidentyfikuj czynniki, które mają najsilniejszy wpływ na przedsiębiorstwo " + "<br/>" +
+            "Określ sfery makrootoczenia, zidentyfikuj czynniki, które mają najsilniejszy wpływ na przedsiębiorstwo " +
             "każdemu analizowanemu zjawisku przypisz trzy potencjalne trendy: tendencję wzrostową, tendencję stabilizacyjną i tendencję spadkową procesu w przyszłości." + "<br/>" +
             "2.  Oceń wybrane czynniki w dwóch wymiarach:" + "<br/>" +
             "Siły wpływu danego procesu na przedsiębiorstwo ( skalę oceniania potencjalnej negatywnej i pozytywnej siły wpływu czynnika od -5 do +5 )." + "<br/>" +
@@ -31,7 +31,7 @@ public class Config {
             "7.  Dokonaj analizy graficznej" + "<br/>" +
             "8.  Wnioski: wskaż źródła szans i zagrożeń dla przedsiębiorstwa w makrootoczeniu: " + "<br/>" +
             "Analiza burzliwości otoczenia i stopnia uzależnienia (stabilności) organizacji od zmian w nim zachodzących i analiza stopnia ustrukturyzowania otoczenia." + "<br/>" +
-            "<br/>" +
+            "<br/>" + "<br/>" +
             "</body></html>";
 
     public static final Dimension initialState = new Dimension(900, 800);

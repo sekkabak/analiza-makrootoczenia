@@ -6,11 +6,9 @@ import layout.App;
 import layout.Window;
 import model.FirstTwoScenarios;
 import model.SecondTwoScenarios;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 public class Plot extends Window {
 
